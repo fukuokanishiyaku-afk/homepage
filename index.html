@@ -6,6 +6,7 @@
     <title>福岡市西区薬剤師会 | 地域医療の未来へ</title>
     
     <link rel="icon" href="favicon.jpg">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -181,10 +182,10 @@
         </section>
 
         <!-- 2. 会長挨拶・写真 -->
-        <section class="grid grid-cols-1 md:grid-cols-12 gap-10 reveal">
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-10 reveal items-start">
             <!-- 会長写真エリア (4/12) -->
-            <div class="md:col-span-4 glass-card p-4 h-full" data-tilt>
-                <div class="img-container h-[350px] md:h-full bg-gray-100 relative shadow-inner">
+            <div class="md:col-span-4 glass-card p-4" data-tilt>
+                <div class="img-container aspect-square bg-gray-100 relative shadow-inner">
                     <!-- 画像URLを更新しました -->
                     <img src="https://i.postimg.cc/C10qVcWb/mu-xia-hui-zhang.png" 
                          alt="会長写真" 
@@ -198,24 +199,28 @@
 
             <!-- 会長挨拶テキスト (8/12) -->
             <div class="md:col-span-8 glass-card p-10 md:p-12 flex flex-col justify-center" data-tilt data-tilt-max="5">
-                <div class="mb-8">
+                <div class="mb-6">
                     <h2 class="text-3xl font-bold text-brandDarkGreen relative inline-block">
                         会長挨拶
                         <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brandYellow rounded-full"></span>
                     </h2>
                 </div>
-                <div class="space-y-6 text-gray-700 leading-loose text-justify text-base md:text-lg">
+                <div class="space-y-4 text-gray-700 leading-relaxed text-justify text-base">
                     <p>
-                        福岡市西区薬剤師会のホームページをご覧いただき、誠にありがとうございます。
+                        福岡市西区薬剤師会のホームページをご覧いただきありがとうございます。会長の木下です。<br>
+                        平素より当会の活動にご理解とご協力を賜り、厚く御礼申し上げます。
                     </p>
                     <p>
-                        私たち薬剤師会は、地域の皆様の健康な生活をサポートするため、医薬品の適正使用の推進、在宅医療への参画、学校薬剤師活動、休日夜間急患診療など、多岐にわたる活動を行っております。
+                        さて、今年度は「麻薬小売業者間譲渡許可制度」の共同申請を再開いたしました。
+                        以前は希望者が少なく断念しましたが、今回のアンケートでは多くの賛同をいただきました。
+                        反省点を活かし、今回は備蓄情報共有のため「VPCSneo」への登録を条件とした西支部独自ルールを設けております。
+                        詳細は市薬ホームページ西支部ページをご覧ください。
                     </p>
                     <p>
-                        「かかりつけ薬局・薬剤師」として、皆様に信頼され、気軽に相談できる身近な存在であり続けられるよう、会員一同研鑽を積んでまいります。今後とも変わらぬご支援とご協力を賜りますようお願い申し上げます。
+                        西区薬剤師会は、皆様の声を大切に活動を続けてまいります。今後ともよろしくお願い申し上げます。
                     </p>
                 </div>
-                <div class="mt-8 text-right">
+                <div class="mt-6 text-right">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Signature_sample.svg/1200px-Signature_sample.svg.png" alt="サイン" class="h-12 ml-auto opacity-20 filter grayscale">
                 </div>
             </div>
@@ -327,6 +332,10 @@
                              class="img-zoom group-hover:scale-110">
                         <div class="absolute top-4 left-4 bg-brandGreen/90 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
                             お知らせ
+                        </div>
+                        <!-- 注釈を追加 -->
+                        <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">
+                            ※写真は去年のものです
                         </div>
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
