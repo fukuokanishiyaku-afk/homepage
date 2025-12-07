@@ -3,31 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>福岡市西区薬剤師会 | 地域医療の未来へ</title>
     
+    <!-- ==========================================
+         SEO対策 1: タイトルタグの最適化
+         検索結果で一番目立つ部分です。「福岡市」「西区」「薬剤師会」を含めました。
+    ========================================== -->
+    <title>福岡市西区薬剤師会 | 地域医療への貢献と活動</title>
+    
+    <!-- ==========================================
+         SEO対策 2: メタディスクリプションの追加
+         検索結果の説明文として表示されます。120文字程度で活動内容を要約しました。
+    ========================================== -->
+    <meta name="description" content="福岡市西区薬剤師会の公式ホームページです。地域住民への薬物指導、学校薬剤師活動、在宅医療、緊急時の対応など、福岡市西区における地域医療の最前線での取り組みや最新情報をご紹介しています。">
+
     <!-- ==========================================
          Google Search Console 認証タグ
          (ここに取得したメタタグを貼り付けてください)
-         例: <meta name="google-site-verification" content="..." />
     ========================================== -->
+    <!-- <meta name="google-site-verification" content="..." /> -->
 
     <!-- ==========================================
          ファビコン・アイコン設定
     ========================================== -->
-    <!-- 1. 基本のファビコン (PCブラウザ用) -->
     <link rel="icon" href="favicon.jpg">
-    
-    <!-- 2. iPhone / iPad (iOS) 用 -->
-    <!-- ホーム画面に追加した際に使われます。光沢処理はOS側で行われるためapple-touch-iconを指定します -->
     <link rel="apple-touch-icon" href="favicon.jpg">
-    
-    <!-- 3. Android (Chrome) 用 -->
-    <!-- サイズ指定(192x192)があることで、Androidが「これがアプリアイコンだ」と認識しやすくなります -->
     <link rel="icon" type="image/jpeg" sizes="192x192" href="favicon.jpg">
     
-    <!-- ==========================================
-         フォント・スタイル設定
-    ========================================== -->
+    <!-- フォント・スタイル設定 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -181,7 +183,8 @@
         
         <!-- ヘッダーエリア -->
         <header class="text-center mb-20 reveal">
-            <p class="font-en text-brandGreen font-bold tracking-[0.3em] text-sm mb-4 uppercase">Fukuoka City Nishi Ward</p>
+            <!-- SEO対策 3: <h1>タグの使用 -->
+            <!-- ページ全体の主題を表すため、ここに<h1>を使用します -->
             <h1 class="text-5xl md:text-6xl font-black tracking-tight title-gradient drop-shadow-sm">
                 福岡市西区薬剤師会
             </h1>
@@ -203,11 +206,9 @@
         </section>
 
         <!-- 2. 会長挨拶・写真 -->
-        <!-- レイアウトを左右均等（grid-cols-2）に変更 -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal items-center">
             
             <!-- 会長写真エリア (左側) -->
-            <!-- aspect-squareで正方形を強制 -->
             <div class="glass-card p-4 aspect-square flex flex-col" data-tilt>
                 <div class="img-container w-full flex-grow relative shadow-inner bg-gray-100 overflow-hidden">
                     <img src="https://i.postimg.cc/C10qVcWb/mu-xia-hui-zhang.png" 
@@ -215,23 +216,22 @@
                          class="img-zoom object-top w-full h-full object-cover">
                 </div>
                 <div class="mt-4 text-center">
-                    <!-- CHAIRMANを会長に変更 -->
                     <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">会長</p>
                     <p class="text-xl font-bold text-brandDarkGreen">木下 大輔</p>
                 </div>
             </div>
 
             <!-- 会長挨拶テキスト (右側) -->
-            <!-- こちらもaspect-squareで正方形にし、レイアウトを揃える -->
             <div class="glass-card p-8 md:p-12 aspect-square flex flex-col justify-center items-center text-center" data-tilt data-tilt-max="5">
                 <div class="mb-6">
+                    <!-- SEO対策 3: <h2>タグの使用 -->
+                    <!-- 主要なセクションの見出しとして<h2>を使用 -->
                     <h2 class="text-2xl md:text-3xl font-bold text-brandDarkGreen relative inline-block">
                         会長挨拶
                         <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brandYellow rounded-full left-1/2 -translate-x-1/2"></span>
                     </h2>
                 </div>
                 
-                <!-- 文字サイズと量を調整して正方形に収める -->
                 <div class="space-y-4 text-gray-700 leading-relaxed text-sm md:text-base font-medium">
                     <p>
                         福岡市西区薬剤師会のHPをご覧いただきありがとうございます。
@@ -246,7 +246,6 @@
                         現場の声を大切に、地域医療の未来のために活動してまいります。
                     </p>
                 </div>
-                <!-- サイン画像削除済み -->
             </div>
         </section>
 
@@ -386,7 +385,7 @@
         <!-- フッター -->
         <footer class="mt-24 py-12 border-t border-brandGreen/20 text-center relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-t from-brandGreen/5 to-transparent -z-10"></div>
-            <p class="font-en text-brandDarkGreen font-bold text-lg mb-2">Fukuoka City Nishi Ward Pharmacists Association</p>
+            <p class="font-en text-brandDarkGreen font-bold text-lg mb-2">Fukuoka City Nishi Ward Pharmaceutical Association</p>
             <p class="text-xs text-gray-500 tracking-widest">
                 &copy; 2025 福岡市西区薬剤師会 All Rights Reserved.
             </p>
