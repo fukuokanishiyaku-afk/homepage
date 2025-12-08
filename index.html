@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- ==========================================
-         SEO対策 1: タイトルタグの最適化
+          SEO対策 1: タイトルタグの最適化
     ========================================== -->
     <title>福岡市西区薬剤師会 | 地域医療への貢献と活動</title>
     
     <!-- ==========================================
-         SEO対策 2: メタディスクリプションの追加
+          SEO対策 2: メタディスクリプションの追加
     ========================================== -->
     <meta name="description" content="福岡市西区薬剤師会の公式ホームページです。地域住民への薬物指導、学校薬剤師活動、在宅医療、緊急時の対応など、福岡市西区における地域医療の最前線での取り組みや最新情報をご紹介しています。">
 
     <!-- ==========================================
-         Google Search Console 認証タグ
+          Google Search Console 認証タグ
     ========================================== -->
     <!-- <meta name="google-site-verification" content="..." /> -->
 
     <!-- ==========================================
-         ファビコン・アイコン設定
+          ファビコン・アイコン設定
     ========================================== -->
+    <!-- 実際の運用ではパスを正しく設定してください -->
     <link rel="icon" href="favicon.jpg">
     <link rel="apple-touch-icon" href="favicon.jpg">
-    <link rel="icon" type="image/jpeg" sizes="192x192" href="favicon.jpg">
     
     <!-- フォント・スタイル設定 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -263,11 +263,9 @@
                         <tr><td>会長</td><td class="font-bold">木下 大輔</td></tr>
                         <tr><td>副会長</td><td>中島 亜希 / 太田 航</td></tr>
                         <tr><td>支部専務</td><td>清水 太一</td></tr>
-                        <!-- 修正: 竹﨑 → 竹嶋 -->
                         <tr><td>会計</td><td>竹嶋 晋一郎</td></tr>
                         <tr><td>監事</td><td>山村 伸也</td></tr>
                         <tr><td>理事 (薬局)</td><td>磯野 寿光</td></tr>
-                        <!-- 修正: 昌久 → 晶久 -->
                         <tr><td>理事 (広報)</td><td>石井 晶久</td></tr>
                         <tr><td>理事 (学術研修)</td><td>福田 沙耶香 / 冨田 京子</td></tr>
                         <tr><td>理事 (学校薬剤師)</td><td>中島 亜希</td></tr>
@@ -312,8 +310,48 @@
                 <span class="font-en text-xs bg-brandDarkGreen text-white px-4 py-2 rounded-full tracking-widest shadow-lg">NEWS & REPORT</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <!-- Gridレイアウト変更: 2列固定にし、お知らせを横幅いっぱいに -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
+                <!-- 新規記事: 市民向け講座 -->
+                <article class="glass-card group h-full flex flex-col" data-tilt data-tilt-max="3">
+                    <div class="h-56 overflow-hidden relative border-b border-white/30">
+                        <img src="https://i.postimg.cc/Y97c1MfQ/251115yi-yao-pin-qi-fa-jiang-xi-hui.jpg" 
+                             alt="市民講座風景" 
+                             class="img-zoom group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-brandYellow/90 backdrop-blur text-brandDarkGreen text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
+                            活動報告
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-brandGreen/80 backdrop-blur text-white text-[10px] px-2 py-1 rounded shadow-sm">
+                            市民向け
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="font-en text-sm text-gray-400">2025.11.15</span>
+                            <div class="h-px bg-gray-300 flex-grow"></div>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">
+                            福重公民館 市民講座「今知っておきたいくすりの知識と薬局のこと」
+                        </h3>
+                        <div class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">
+                            <p class="mb-3">福岡市西区健康推進科の依頼を受け、高齢者約20名を対象に講演を行いました。</p>
+                            <div class="bg-white/50 p-3 rounded border border-white/60 text-xs text-gray-700">
+                                <p class="mb-1"><span class="font-bold text-brandDarkGreen">講師：</span>そうごう薬局周船寺店<br>土田 雄司 薬局長</p>
+                                <p><span class="font-bold text-brandDarkGreen">内容：</span>かかりつけ・医療DXなど</p>
+                            </div>
+                        </div>
+                        <!-- PDFダウンロードボタン -->
+                        <div class="mt-auto pt-4 border-t border-gray-200/50">
+                            <a href="lecture-20251115.pdf" target="_blank" class="flex items-center justify-center w-full py-2 bg-brandGreen/10 text-brandDarkGreen font-bold rounded-lg hover:bg-brandGreen hover:text-white transition-all text-sm group-hover:shadow-md">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                講演資料PDFを見る
+                            </a>
+                            <p class="text-[10px] text-gray-400 text-center mt-1">※別タブで開きます</p>
+                        </div>
+                    </div>
+                </article>
+
                 <!-- 記事1：麻薬説明会 -->
                 <article class="glass-card group h-full flex flex-col" data-tilt data-tilt-max="3">
                     <div class="h-56 overflow-hidden relative border-b border-white/30">
@@ -323,16 +361,19 @@
                         <div class="absolute top-4 left-4 bg-brandYellow/90 backdrop-blur text-brandDarkGreen text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
                             活動報告
                         </div>
+                        <div class="absolute bottom-2 right-2 bg-gray-600/80 backdrop-blur text-white text-[10px] px-2 py-1 rounded shadow-sm">
+                            会員向け
+                        </div>
                     </div>
-                    <div class="p-8 flex flex-col flex-grow">
+                    <div class="p-6 flex flex-col flex-grow">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="font-en text-sm text-gray-400">2025.11.05</span>
                             <div class="h-px bg-gray-300 flex-grow"></div>
                         </div>
-                        <h3 class="font-bold text-xl text-gray-800 mb-4 group-hover:text-brandGreen transition-colors">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">
                             麻薬小売業者間譲渡制度に関する説明会 開催報告
                         </h3>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-6 flex-grow">
+                        <p class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">
                             西市民センターにて説明会を開催し、15名の先生方にご参加いただきました。麻薬の適正な管理と運用、申請手続きについて解説を行いました。
                         </p>
                         <div class="mt-auto">
@@ -345,32 +386,33 @@
                 </article>
 
                 <!-- 記事2：西結会ご案内 -->
-                <article class="glass-card group h-full flex flex-col" data-tilt data-tilt-max="3">
-                    <div class="h-56 overflow-hidden relative border-b border-white/30">
+                <!-- md:col-span-2 を追加して横幅いっぱいに -->
+                <article class="glass-card group h-full flex flex-col md:col-span-2" data-tilt data-tilt-max="3">
+                    <div class="h-56 md:h-72 overflow-hidden relative border-b border-white/30">
                         <img src="https://i.postimg.cc/C5Nw0KpC/sukurinshotto-2025-12-07-042845.png" 
                              alt="西結会イメージ" 
-                             class="img-zoom group-hover:scale-110">
+                             class="img-zoom group-hover:scale-110 w-full h-full object-cover">
                         <div class="absolute top-4 left-4 bg-brandGreen/90 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
                             お知らせ
                         </div>
-                        <!-- 注釈を追加 -->
                         <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">
                             ※写真は去年のものです
                         </div>
                     </div>
-                    <div class="p-8 flex flex-col flex-grow">
+                    <div class="p-6 flex flex-col flex-grow">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="font-en text-sm text-gray-400">2025.12.07</span>
                             <div class="h-px bg-gray-300 flex-grow"></div>
                         </div>
-                        <h3 class="font-bold text-xl text-gray-800 mb-4 group-hover:text-brandGreen transition-colors">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">
                             会員親睦会「西結会」ご案内
                         </h3>
-                        <div class="text-sm text-gray-600 leading-relaxed mb-6 flex-grow">
-                            <p class="mb-3">会員相互の親睦を深める「西結会」を開催いたします。音楽イベントも予定しております。</p>
-                            <div class="bg-white/50 p-4 rounded-lg border border-white/60 text-xs text-gray-700">
-                                <p class="mb-1"><strong class="text-brandDarkGreen">日時：</strong>令和8年（2026年）3月7日（土）</p>
-                                <p><strong class="text-brandDarkGreen">場所：</strong>kubelto（クベルト）</p>
+                        <div class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">
+                            <p class="mb-3">会員相互の親睦を深める「西結会」を開催します。今年は音楽イベントも予定しております。</p>
+                            <div class="bg-white/50 p-4 rounded border border-white/60 text-xs text-gray-700">
+                                <p class="mb-1"><span class="font-bold text-brandDarkGreen">日時：</span>令和8年3月7日（土）</p>
+                                <p class="mb-3"><span class="font-bold text-brandDarkGreen">場所：</span>kubelto（クベルト）</p>
+                                <p class="text-gray-500 font-bold border-t border-gray-200 pt-2">※内容や会費等の詳細は、1月下旬にご案内予定です。</p>
                             </div>
                         </div>
                     </div>
@@ -456,7 +498,6 @@
             particlesMesh.geometry.attributes.position.needsUpdate = true;
 
             // 距離が近いパーティクル同士を線で結ぶ（ネットワーク効果）
-            // 注意: 毎フレームジオメトリを再生成するのは重いが、点数が少ないので許容範囲
             const lineGeometry = new THREE.BufferGeometry();
             const linePositions = [];
 
@@ -482,13 +523,13 @@
 
             lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
             
-            // 古い線を削除して新しい線を追加（メモリリーク防止のため簡易実装）
+            // 古い線を削除して新しい線を追加
             const oldLines = scene.getObjectByName('networkLines');
             if (oldLines) scene.remove(oldLines);
 
             const linesMesh = new THREE.LineSegments(lineGeometry, linesMaterial);
             linesMesh.name = 'networkLines';
-            linesMesh.rotation.y = particlesMesh.rotation.y; // 回転を同期
+            linesMesh.rotation.y = particlesMesh.rotation.y;
             linesMesh.rotation.x = particlesMesh.rotation.x;
             scene.add(linesMesh);
 
@@ -516,7 +557,7 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const rotateX = ((y - centerY) / centerY) * -3; // 傾きの強さ
+                const rotateX = ((y - centerY) / centerY) * -3; 
                 const rotateY = ((x - centerX) / centerX) * 3;
 
                 el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
