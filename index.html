@@ -14,18 +14,6 @@
     ========================================== -->
     <meta name="description" content="福岡市西区薬剤師会の公式ホームページです。地域住民への薬物指導、学校薬剤師活動、在宅医療、緊急時の対応など、福岡市西区における地域医療の最前線での取り組みや最新情報をご紹介しています。">
 
-    <!-- ==========================================
-          Google Search Console 認証タグ
-    ========================================== -->
-    <!-- <meta name="google-site-verification" content="..." /> -->
-
-    <!-- ==========================================
-          ファビコン・アイコン設定
-    ========================================== -->
-    <!-- 実際の運用ではパスを正しく設定してください -->
-    <link rel="icon" href="favicon.jpg">
-    <link rel="apple-touch-icon" href="favicon.jpg">
-    
     <!-- フォント・スタイル設定 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -176,7 +164,18 @@
     <!-- Three.js 背景キャンバス -->
     <div id="canvas-container" class="fixed top-0 left-0 w-full h-full -z-10 opacity-60"></div>
 
-    <main class="max-w-6xl mx-auto px-6 py-16 relative z-10 space-y-20">
+    <!-- 追加: トップナビゲーションバー（会員薬局検索） -->
+    <div class="relative z-50 w-full flex justify-center pt-6 pb-2 pointer-events-none">
+        <a href="https://www.fpa.gr.jp/citizen/search_pharmacy/" target="_blank" rel="noopener noreferrer"
+           class="pointer-events-auto glass-card !rounded-full px-8 py-3 flex items-center gap-3 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
+            <div class="bg-brandGreen text-white p-1.5 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <span class="tracking-wide">会員薬局検索</span>
+        </a>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-6 py-8 relative z-10 space-y-20">
         
         <!-- ヘッダーエリア -->
         <header class="text-center mb-20 reveal">
@@ -310,7 +309,7 @@
                 <span class="font-en text-xs bg-brandDarkGreen text-white px-4 py-2 rounded-full tracking-widest shadow-lg">NEWS & REPORT</span>
             </div>
 
-            <!-- Gridレイアウト変更: 2列固定にし、お知らせを横幅いっぱいに -->
+            <!-- Gridレイアウト -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
                 <!-- 新規記事: 市民向け講座 -->
@@ -343,11 +342,10 @@
                         </div>
                         <!-- PDFダウンロードボタン -->
                         <div class="mt-auto pt-4 border-t border-gray-200/50">
-                            <a href="lecture-20251115.pdf" target="_blank" class="flex items-center justify-center w-full py-2 bg-brandGreen/10 text-brandDarkGreen font-bold rounded-lg hover:bg-brandGreen hover:text-white transition-all text-sm group-hover:shadow-md">
+                            <button onclick="alert('実際のPDFリンクへ飛びます')" class="flex items-center justify-center w-full py-2 bg-brandGreen/10 text-brandDarkGreen font-bold rounded-lg hover:bg-brandGreen hover:text-white transition-all text-sm group-hover:shadow-md">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                 講演資料PDFを見る
-                            </a>
-                            <p class="text-[10px] text-gray-400 text-center mt-1">※別タブで開きます</p>
+                            </button>
                         </div>
                     </div>
                 </article>
@@ -386,7 +384,6 @@
                 </article>
 
                 <!-- 記事2：西結会ご案内 -->
-                <!-- md:col-span-2 を追加して横幅いっぱいに -->
                 <article class="glass-card group h-full flex flex-col md:col-span-2" data-tilt data-tilt-max="3">
                     <div class="h-56 md:h-72 overflow-hidden relative border-b border-white/30">
                         <img src="https://i.postimg.cc/Zn7DDyXW/xi-jie-hui.jpg" 
