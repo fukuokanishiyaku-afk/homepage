@@ -164,27 +164,60 @@
     <!-- Three.js 背景キャンバス -->
     <div id="canvas-container" class="fixed top-0 left-0 w-full h-full -z-10 opacity-60"></div>
 
-    <!-- 追加: トップナビゲーションバー（会員薬局検索） -->
-    <div class="relative z-50 w-full flex justify-center pt-6 pb-2 pointer-events-none">
-        <a href="https://www.fpa.gr.jp/citizen/search_pharmacy/" target="_blank" rel="noopener noreferrer"
-           class="pointer-events-auto glass-card !rounded-full px-8 py-3 flex items-center gap-3 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
-            <div class="bg-brandGreen text-white p-1.5 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+    <!-- ==========================================
+          トップナビゲーション & ヘッダーエリア
+          ・要素を中央寄せにし、間隔を詰める
+          ・アイコンと文字を最大化
+    ========================================== -->
+    <div class="relative z-50 w-full flex flex-col xl:flex-row justify-center items-center xl:items-center pt-8 px-4 pointer-events-none gap-4">
+        
+        <!-- 左側: アイコン (極大サイズ) -->
+        <div class="pointer-events-auto shrink-0">
+            <a href="#" class="glass-card flex items-center justify-center p-4 hover:scale-105 transition-transform aspect-square w-48 h-48 md:w-64 md:h-64 bg-white/80 rounded-3xl">
+                <img src="https://i.postimg.cc/FzCysGFc/favicon.png" alt="福岡市西区薬剤師会ロゴ" class="w-full h-full object-contain">
+            </a>
+        </div>
+
+        <!-- 右側: タイトル & ボタン群 (コンテナでまとめて近づける) -->
+        <div class="flex flex-col items-center xl:items-start gap-3 pointer-events-auto w-full xl:w-auto">
+            
+            <!-- タイトル (極大サイズ・行間調整) -->
+            <div class="text-center xl:text-left">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight title-gradient drop-shadow-sm leading-tight py-2">
+                    福岡市西区薬剤師会
+                </h1>
+                <div class="h-2 w-32 bg-gradient-to-r from-brandYellow to-orange-300 mx-auto xl:ml-1 xl:mr-0 mt-1 rounded-full shadow-neon"></div>
             </div>
-            <span class="tracking-wide">会員薬局検索</span>
-        </a>
+
+            <!-- ボタン群 (大型化・間隔調整) -->
+            <div class="flex flex-wrap items-center justify-center xl:justify-start gap-4 mt-2">
+                <!-- ボタン1: 会員薬局検索 -->
+                <a href="https://www.fpa.gr.jp/citizen/search_pharmacy/" target="_blank" rel="noopener noreferrer"
+                   class="glass-card !rounded-full px-8 py-4 flex items-center gap-4 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
+                    <div class="bg-brandGreen text-white p-2 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <span class="tracking-wide text-lg md:text-2xl">会員薬局検索</span>
+                </a>
+
+                <!-- ボタン2: 西支部便り2025年秋号 (PDFリンク) -->
+                <a href="西支部便り2025年秋号.pdf" target="_blank" rel="noopener noreferrer"
+                   class="glass-card !rounded-full px-8 py-4 flex items-center gap-4 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
+                    <div class="bg-brandYellow text-brandDarkGreen p-2 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="tracking-wide text-lg md:text-2xl">西支部便り2025年秋号</span>
+                </a>
+            </div>
+        </div>
+
     </div>
 
-    <main class="max-w-6xl mx-auto px-6 py-8 relative z-10 space-y-20">
+    <main class="max-w-6xl mx-auto px-6 py-8 relative z-10 space-y-20 mt-4">
         
-        <!-- ヘッダーエリア -->
-        <header class="text-center mb-20 reveal">
-            <!-- SEO対策 3: <h1>タグの使用 -->
-            <h1 class="text-5xl md:text-6xl font-black tracking-tight title-gradient drop-shadow-sm">
-                福岡市西区薬剤師会
-            </h1>
-            <div class="h-1.5 w-24 bg-gradient-to-r from-brandYellow to-orange-300 mx-auto mt-6 rounded-full shadow-neon"></div>
-        </header>
+        <!-- コンテンツエリアの開始位置調整 -->
 
         <!-- 1. トップ画像 (Parallax Effect) -->
         <section class="glass-card p-4 reveal" data-tilt>
