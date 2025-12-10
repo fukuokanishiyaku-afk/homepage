@@ -365,13 +365,7 @@
                         <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brandYellow rounded-full left-1/2 -translate-x-1/2"></span>
                     </h2>
                     
-                    <!-- ✨ Gemini API Feature: TTS Button -->
-                    <button onclick="readGreeting()" id="tts-btn" class="absolute -right-8 top-0 md:-right-16 md:top-1 p-2 bg-brandGreen/10 hover:bg-brandGreen text-brandGreen hover:text-white rounded-full transition-all group" title="✨ AI音声で読み上げる">
-                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
-                        <span class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">✨ AI音声で聞く</span>
-                        <!-- Loading Spinner -->
-                        <svg id="tts-loading" class="animate-spin h-5 w-5 text-brandGreen hidden absolute top-2 left-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                    </button>
+                    <!-- 【削除】AI音声読み上げボタンを削除しました -->
 
                 </div>
                 <div id="greeting-text" class="space-y-4 text-gray-700 leading-relaxed text-sm md:text-base font-medium">
@@ -402,7 +396,8 @@
                         <tr><td>監事</td><td>山村 伸也</td></tr>
                         <tr><td>理事 (薬局)</td><td>磯野 寿光</td></tr>
                         <tr><td>理事 (広報)</td><td>石井 晶久</td></tr>
-                        <tr><td>理事 (学術研修)</td><td>福田 沙耶香 / <span class="text-xs text-gray-500">副:</span> 冨田 京子</td></tr>
+                        <!-- 修正箇所：副を削除 -->
+                        <tr><td>理事 (学術研修)</td><td>福田 沙耶香 / 冨田 京子</td></tr>
                         <tr><td>理事 (学校薬剤師)</td><td>中島 亜希</td></tr>
                         <tr><td>理事 (組織)</td><td>清水 聖子</td></tr>
                         <tr><td>理事 (在宅・介護)</td><td>坂本 直大</td></tr>
@@ -607,7 +602,7 @@
     </div>
 
     <!-- ==========================================
-          ✨ Gemini API Feature: AI Chatbot UI (Mascot Ver.)
+          ✨ Gemini API Feature: AI Chatbot UI (Mascot Ver.) -> Scenario Bot
     ========================================== -->
     <div id="chatbot-container" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
         
@@ -631,27 +626,20 @@
             
             <!-- Chat Area -->
             <div id="chat-messages" class="flex-grow overflow-y-auto p-4 bg-gray-50 scroll-smooth">
-                <!-- Initial Message -->
+                <!-- Initial Message (シナリオ型に変更するためJS側で初期化) -->
                 <div class="chat-message ai flex gap-3 items-start">
                     <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-gray-200 bg-white">
                         <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <p>こんにちは！福岡市西区薬剤師会の公式キャラクター「ニシヤクくん」だよ✨<br><br>💊 <strong>お薬のこと</strong><br>🏥 <strong>健康のこと</strong><br>🏠 <strong>地域の一般的なこと</strong><br><br>なんでも気軽に相談してね！</p>
-                        <p class="text-[10px] text-gray-400 mt-2 pt-2 border-t border-gray-100">※ボクはAIだよ。医学的な診断や具体的な投薬指示はできないから、必ず専門の医師や薬剤師に相談してね。</p>
+                        <!-- 初期メッセージはJavaScriptでロードされます -->
                     </div>
                 </div>
             </div>
 
-            <!-- Input Area -->
-            <div class="p-3 bg-white border-t border-gray-100">
-                <form onsubmit="handleChatSubmit(event)" class="relative">
-                    <input type="text" id="chat-input" placeholder="例: 薬の飲み忘れについて..." 
-                           class="w-full pl-4 pr-12 py-3 rounded-full bg-gray-100 focus:bg-white border border-transparent focus:border-brandGreen focus:ring-2 focus:ring-brandGreen/20 outline-none transition-all text-sm">
-                    <button type="submit" id="chat-send-btn" class="absolute right-2 top-1.5 p-1.5 bg-brandGreen text-white rounded-full hover:bg-brandDarkGreen transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                        <svg class="w-4 h-4 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                    </button>
-                </form>
+            <!-- Input Area (ボタン操作のみなので削除、著作権表示に変更) -->
+            <div class="p-3 bg-gray-50 border-t border-gray-200 text-center">
+                <p class="text-[10px] text-gray-400">© 福岡市西区薬剤師会 AI Chat</p>
             </div>
         </div>
 
@@ -676,186 +664,174 @@
     <!-- Scripts -->
     <script>
         // =========================================================================
-        // ✨ Gemini API Configuration & Logic
+        // ✨ Chatbot Logic (シナリオ選択型・APIなし版)
         // =========================================================================
         
-        const apiKey = ""; 
-
-        // 1. Text-to-Speech (TTS) Function
-        async function readGreeting() {
-            const textToRead = document.getElementById('greeting-text').innerText;
-            const btn = document.getElementById('tts-btn');
-            const spinner = document.getElementById('tts-loading');
-            
-            btn.classList.add('pointer-events-none', 'opacity-70');
-            spinner.classList.remove('hidden');
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: textToRead }] }],
-                        generationConfig: {
-                            responseModalities: ["AUDIO"],
-                            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } }
-                        }
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates[0].content.parts[0].inlineData) {
-                    const audioContent = data.candidates[0].content.parts[0].inlineData.data;
-                    const wavBytes = pcmToWav(base64ToArrayBuffer(audioContent), 24000); 
-                    const wavBlob = new Blob([wavBytes], { type: 'audio/wav' });
-                    const audioUrl = URL.createObjectURL(wavBlob);
-                    const audio = new Audio(audioUrl);
-                    audio.play();
-                }
-
-            } catch (error) {
-                console.error("TTS Error:", error);
-                alert("音声読み上げの生成に失敗しました。");
-            } finally {
-                btn.classList.remove('pointer-events-none', 'opacity-70');
-                spinner.classList.add('hidden');
+        // ▼▼▼ 会話のシナリオ・メニュー設定 ▼▼▼
+        const chatScenarios = {
+            // ■ 最初のメニュー（ルート）
+            root: {
+                text: "こんにちは！福岡市西区薬剤師会の「ニシヤクくん」だよ✨<br>知りたいメニューを選んでね！",
+                options: [
+                    { label: "💊 近くの薬局を探す", action: "modal_search" },
+                    { label: "🏥 今の救急・当番医", action: "link_emergency" },
+                    { label: "📢 イベント・お知らせ", action: "scroll_news" },
+                    // 修正箇所：在宅訪問をルートメニューから削除
+                    { label: "❓ よくある質問", action: "scenario_faq" },     // 提案A
+                    { label: "📝 入会のご案内", action: "link_join" }
+                ]
+            },
+            // ■ 提案A: よくある質問メニュー
+            faq: {
+                text: "お薬や制度についての疑問だね！<br>知りたいことを選んでみてね💊",
+                options: [
+                    { label: "在宅訪問について", action: "text_zaitaku" }, // 追加: FAQにも配置
+                    { label: "オーソライズド・ジェネリック", action: "text_ag" }, 
+                    { label: "マイナ保険証って？", action: "text_myna" }, 
+                    { label: "お薬手帳って必要？", action: "text_techo" },
+                    { label: "かかりつけ薬剤師とは", action: "text_family" },
+                    { label: "戻る", action: "scenario_root" }
+                ]
             }
-        }
+        };
 
-        function base64ToArrayBuffer(base64) {
-            const binaryString = window.atob(base64);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) { bytes[i] = binaryString.charCodeAt(i); }
-            return bytes.buffer;
-        }
+        // ▼▼▼ 各回答のテキストデータ（ニシヤクくんのセリフ） ▼▼▼
+        const textResponses = {
+            // 既存の回答
+            techo: "お薬手帳はとっても大事だよ！📚<br>違う病院のお薬との飲み合わせをチェックしたり、副作用を防ぐために必要なんだ。<br>災害の時にも役に立つよ。最近はスマホのアプリ版もあるから、薬局で聞いてみてね✨",
+            family: "「かかりつけ薬剤師」は、あなたの体質やお薬のことを全部把握してくれている、専属の薬剤師さんのことだよ👨‍⚕️<br>夜間や休日の相談に乗ってくれたり、お薬の整理を手伝ってくれたりする頼れるパートナーなんだ✨",
+            zaitaku: "「足が悪くて薬局に行けない…」<br>「お薬の管理が難しくなってきた…」<br><br>そんな時は、薬剤師が自宅を訪問して、お薬の説明や管理をお手伝いできる場合があるよ🚗<br>これを『在宅（ざいたく）』って言うんだ。<br><br>利用するには医師の指示が必要だから、まずは近くの薬局か、病院の先生に相談してみてね！🍀",
 
-        function pcmToWav(pcmData, sampleRate = 24000) {
-            const numChannels = 1;
-            const bitsPerSample = 16;
-            const byteRate = sampleRate * numChannels * bitsPerSample / 8;
-            const blockAlign = numChannels * bitsPerSample / 8;
-            const dataSize = pcmData.byteLength;
-            const buffer = new ArrayBuffer(44 + dataSize);
-            const view = new DataView(buffer);
+            // 新規追加: AGについて
+            ag: "「オーソライズド・ジェネリック（AG）」は、新薬を作った会社から許諾（オーソライズ）を得て作るジェネリック医薬品のことだよ💊<br><br>原薬や添加物、製造方法が新薬と同じだから、新薬と全く同じお薬が安く使えるんだ✨<br>希望するときは薬剤師に聞いてみてね！",
 
-            function writeString(view, offset, string) {
-                for (let i = 0; i < string.length; i++) { view.setUint8(offset + i, string.charCodeAt(i)); }
-            }
+            // 新規追加: マイナ保険証について
+            myna: "「マイナ保険証」は、マイナンバーカードを健康保険証として使うことだよ💳<br><br>【メリット】<br>✅ 過去のお薬情報や健診結果を医師・薬剤師と共有できて、より適切な治療が受けられる！<br>✅ 手続きが顔認証でスムーズ！<br>✅ 限度額適用認定証がなくても、高額療養費制度が使える！<br><br>とっても便利だから、ぜひ使ってみてね✨"
+        };
 
-            writeString(view, 0, 'RIFF');
-            view.setUint32(4, 36 + dataSize, true);
-            writeString(view, 8, 'WAVE');
-            writeString(view, 12, 'fmt ');
-            view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true); 
-            view.setUint16(22, numChannels, true);
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, byteRate, true);
-            view.setUint16(32, blockAlign, true);
-            view.setUint16(34, bitsPerSample, true);
-            writeString(view, 36, 'data');
-            view.setUint32(40, dataSize, true);
+        // チャットの状態管理
+        let isChatOpen = false;
 
-            const pcmBytes = new Uint8Array(pcmData);
-            const wavBytes = new Uint8Array(buffer);
-            wavBytes.set(pcmBytes, 44);
-
-            return buffer;
-        }
-
-
-        // 2. Chatbot Logic
         function toggleChat() {
             const window = document.getElementById('chatbot-window');
-            window.classList.toggle('hidden');
-        }
-
-        async function handleChatSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            addChatMessage(message, 'user');
-            input.value = '';
-            const loadingId = addLoadingIndicator();
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: message }] }],
-                        systemInstruction: {
-                            parts: [{ text: "あなたは福岡市西区薬剤師会の公式マスコットキャラクター「ニシヤクくん」（AI）です。ユーザーからの「お薬」「健康」「地域の一般的なこと」に関する質問に、親切かつフレンドリーな日本語で答えてください。語尾に「〜だよ」「〜だね」などを使い、柔らかい口調を心がけてください。一人称は「ボク」を使ってください。ただし、あなたは医師ではないため、確定的な診断や具体的な投薬指示は絶対に避けてください。回答の最後には必ず『※ボクはAIだよ。具体的な症状については、必ず医師または薬剤師に相談してね』という趣旨の免責事項を添えてください。絵文字を適度に使用して楽しく会話してください。" }]
-                        }
-                    })
-                });
-
-                const data = await response.json();
-                const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "すみません、うまく答えられませんでした。もう一度お試しください。";
-                removeLoadingIndicator(loadingId);
-                addChatMessage(aiText, 'ai');
-
-            } catch (error) {
-                console.error("Chat Error:", error);
-                removeLoadingIndicator(loadingId);
-                addChatMessage("申し訳ありません。現在AIシステムに接続できません。", 'ai');
-            }
-        }
-
-        function addChatMessage(text, type) {
-            const container = document.getElementById('chat-messages');
-            const div = document.createElement('div');
+            isChatOpen = !isChatOpen;
             
-            if (type === 'ai') {
-                div.className = `chat-message ai flex gap-3 items-start`;
-                div.innerHTML = `
-                    <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-gray-200 bg-white">
-                        <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
-                    </div>
-                    <div>${text.replace(/\n/g, '<br>')}</div>
-                `;
+            if (isChatOpen) {
+                window.classList.remove('hidden');
+                // 初回オープン時、メッセージがまだない場合は初期メニューを表示
+                // (chat-messageクラスを持つ要素が1つ以下=初期状態の空枠のみの場合)
+                const msgContainer = document.getElementById('chat-messages');
+                if (msgContainer.innerHTML.trim().includes('<!-- 初期メッセージ')) {
+                    msgContainer.innerHTML = ''; // クリア
+                    renderScenario('root');
+                }
             } else {
-                div.className = `chat-message user`;
-                div.innerHTML = text.replace(/\n/g, '<br>');
+                window.classList.add('hidden');
             }
-            
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
         }
 
-        function addLoadingIndicator() {
+        // シナリオを表示する関数
+        function renderScenario(scenarioId) {
+            const scenario = chatScenarios[scenarioId] || chatScenarios['root'];
+            
+            // 1. ニシヤクくんのメッセージを表示
+            addBotMessage(scenario.text);
+
+            // 2. 選択肢ボタンを表示
+            addOptions(scenario.options);
+        }
+
+        // ボタンが押された時の動作分岐
+        function handleOption(action) {
+            
+            // --- リンク・機能系 ---
+            if (action === 'modal_search') {
+                addBotMessage("西区の薬局だね！検索画面を開くよ✨");
+                setTimeout(() => openSearchModal(), 800);
+            } 
+            else if (action === 'link_emergency') {
+                addBotMessage("急な病気やケガだね。福岡市の急患センター情報を案内するね。<br>お大事にしてください🍀");
+                // リンク先を変更しました
+                setTimeout(() => window.open('https://www.city.fukuoka.lg.jp/hofuku/chiikiiryo/kyukyuiryo-syobo/6820_2.html', '_blank'), 1000);
+            }
+            else if (action === 'scroll_news') {
+                addBotMessage("最新のイベントや活動報告はこちらだよ！👇");
+                // チャットを閉じて、活動報告セクションへスクロール
+                toggleChat(); 
+                // 「活動報告」という文字を含むh2を探してスクロール
+                const headings = Array.from(document.querySelectorAll('h2'));
+                const target = headings.find(h => h.textContent.includes('活動報告'))?.closest('section');
+                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            else if (action === 'link_join') {
+                addBotMessage("入会については、福岡県薬剤師会のページで詳しく案内しているよ！");
+                setTimeout(() => window.open('https://www.fpa.gr.jp/pharmacist/', '_blank'), 1000);
+            }
+            
+            // --- シナリオ分岐系 ---
+            else if (action === 'scenario_faq') {
+                renderScenario('faq');
+            }
+            else if (action === 'scenario_root') {
+                renderScenario('root');
+            }
+            
+            // --- 定型文回答系 (提案A・B) ---
+            else if (action.startsWith('text_')) {
+                const key = action.replace('text_', '');
+                if (textResponses[key]) {
+                    addBotMessage(textResponses[key]);
+                    // 読み終わった頃に「最初のメニューに戻る」ボタンを出す
+                    setTimeout(() => {
+                        addOptions([{ label: "最初のメニューに戻る", action: "scenario_root" }]);
+                    }, 2000);
+                }
+            }
+        }
+
+        // ニシヤクくんのメッセージを追加 (HTMLタグ有効)
+        function addBotMessage(htmlText) {
             const container = document.getElementById('chat-messages');
             const div = document.createElement('div');
-            div.className = `chat-message ai typing-indicator flex gap-3 items-center`; // Modified for alignment
-            div.id = `loading-${Date.now()}`;
-            
-            // Add mascot icon to loading state too for consistency
+            div.className = `chat-message ai flex gap-3 items-start animate-fade-in-up`;
             div.innerHTML = `
                 <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-gray-200 bg-white">
                     <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
                 </div>
-                <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex gap-1">
-                    <span></span><span></span><span></span>
+                <div class="bg-white p-3 rounded-r-xl rounded-bl-xl border border-gray-100 shadow-sm text-sm text-gray-700 leading-relaxed">
+                   ${htmlText}
                 </div>
             `;
-            // Override styles for clean look
-            div.style.background = 'transparent';
-            div.style.boxShadow = 'none';
-            div.style.border = 'none';
-            div.style.padding = '0';
+            container.appendChild(div);
+            // スクロールを一番下へ
+            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        }
+
+        // 選択肢ボタンを追加
+        function addOptions(options) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = "flex flex-wrap gap-2 pl-11 mb-6 animate-fade-in-up mt-2"; 
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "bg-white text-brandGreen border border-brandGreen/30 px-4 py-2 rounded-full text-xs md:text-sm font-bold shadow-sm hover:bg-brandGreen hover:text-white transition-all hover:scale-105 active:scale-95";
+                btn.textContent = opt.label;
+                btn.onclick = () => {
+                    // 何度でも押せるようにするため、無効化処理を削除しました
+                    // ボタンを押したことはhandleOptionへ
+                    handleOption(opt.action);
+                };
+                div.appendChild(btn);
+            });
 
             container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-            return div.id;
+            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
         }
 
-        function removeLoadingIndicator(id) {
-            const el = document.getElementById(id);
-            if (el) el.remove();
-        }
+        // =========================================================================
+        // TTS関連のスクリプトは削除されました
+        // =========================================================================
 
 
         // =========================================================================
@@ -1057,6 +1033,7 @@
                 // カード全体をクリックしたらGoogleマップへ
                 card.onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address + ' ' + p.name)}`, '_blank');
                 
+                // 変更箇所：管理薬剤師の表示行を削除しました
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
                         <span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">${p.division}</span>
@@ -1066,7 +1043,6 @@
                         ${p.name}
                         <svg class="w-5 h-5 text-gray-300 group-hover:text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </h4>
-                    <p class="text-xs text-gray-500 mb-3"><span class="font-bold">管理薬剤師:</span> ${p.member}</p>
                     
                     <div class="mt-auto space-y-2 text-sm text-gray-600">
                         <div class="flex items-start gap-2">
@@ -1109,91 +1085,91 @@
     ========================================== -->
     <script>
         const pharmaciesData = [
-          { "division": "壱岐", "name": "(株)アインファーマシーズ アイン薬局 生の松原店", "member": "徳富　万由子", "tel": "881-0530", "fax": "881-0068", "zip": "〒819-0055", "address": "西区生の松原3-25-18", "searchArea": "生の松原" },
-          { "division": "壱岐", "name": "(株)アガペ上山門薬局", "member": "秋山　武義", "tel": "892-3877", "fax": "892-3878", "zip": "〒819-0054", "address": "西区上山門1-14-1", "searchArea": "上山門" },
-          { "division": "壱岐", "name": "(有)イッセイ イッセイ調剤薬局", "member": "仲上  一成", "tel": "811-6380", "fax": "811-6380", "zip": "〒819-0031", "address": "西区橋本2-17-28", "searchArea": "橋本" },
-          { "division": "壱岐", "name": "(株)大賀薬局 石丸店", "member": "大庭　健司", "tel": "882-3051", "fax": "882-3987", "zip": "〒819-0025", "address": "西区石丸3-1-42", "searchArea": "石丸" },
-          { "division": "壱岐", "name": "(株)大賀薬局 拾六町店", "member": "市山　瑛理", "tel": "882-8117", "fax": "882-8276", "zip": "〒819-0045", "address": "西区拾六町団地1-19", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(有)コ－シン薬局", "member": "山縣　光喜", "tel": "884-1837", "fax": "400-4896", "zip": "〒819-0041", "address": "西区拾六町1-19-1", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(株)ココカラファインヘルスケア ココカラファイン薬局 白十字病院店", "member": "太田　航", "tel": "407-2272", "fax": "407-2273", "zip": "〒819-0025", "address": "西区石丸4-3-1駐車場棟1階", "searchArea": "石丸" },
-          { "division": "壱岐", "name": "(株)なの花九州 さくら薬局 福リハ店", "member": "住吉　万里子", "tel": "834-6580", "fax": "819-8551", "zip": "〒819-8551", "address": "西区野方7-770", "searchArea": "野方" },
-          { "division": "壱岐", "name": "(株)アールファーマ セイブ薬局", "member": "重松　明子", "tel": "812-0122", "fax": "812-0123", "zip": "〒819-0037", "address": "西区飯盛520-2", "searchArea": "飯盛" },
-          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 石丸店", "member": "石井　晶久", "tel": "885-1631", "fax": "885-1632", "zip": "〒819-0025", "address": "西区石丸3-7-30", "searchArea": "石丸" },
-          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 下山門店", "member": "清水　聖子", "tel": "892-1511", "fax": "892-1519", "zip": "〒819-0051", "address": "西区下山門団地40-1", "searchArea": "下山門団地" },
-          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 戸切店", "member": "百枝　尚", "tel": "892-5041", "fax": "892-5042", "zip": "〒819-0032", "address": "西区戸切2-13-10", "searchArea": "戸切" },
-          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 野方店", "member": "清水　太一", "tel": "812-1601", "fax": "812-1602", "zip": "〒819-0043", "address": "西区野方7-759-4", "searchArea": "野方" },
-          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 野方東店", "member": "福田　沙耶香", "tel": "812-5231", "fax": "812-5232", "zip": "〒819-0043", "address": "西区野方6-36-26", "searchArea": "野方" },
-          { "division": "壱岐", "name": "大晃調剤薬局(有)", "member": "須賀原　輝和", "tel": "811-0928", "fax": "811-0928", "zip": "〒819-0042", "address": "西区壱岐団地136-7", "searchArea": "壱岐団地" },
-          { "division": "壱岐", "name": "(株)タカラ薬局 タカラ薬局 西の丘", "member": "水江　育子", "tel": "891-1298", "fax": "891-1298", "zip": "〒819-0041", "address": "西区拾六町3-8-20", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(有)テクノメディカ ＴＭ調剤薬局 野方６丁目店", "member": "溝口　展子", "tel": "894-8688", "fax": "894-8687", "zip": "〒819-0043", "address": "西区野方6-26-8", "searchArea": "野方" },
-          { "division": "壱岐", "name": "(有)イッセイ ナカガミ薬局 センタービル店", "member": "仲上　恵司", "tel": "811-6530", "fax": "812-1136", "zip": "〒819-0042", "address": "西区壱岐団地135-11", "searchArea": "壱岐団地" },
-          { "division": "壱岐", "name": "(株)ニック ニック調剤薬局 生の松原店", "member": "小宮　史子", "tel": "892-1866", "fax": "892-1867", "zip": "〒819-0055", "address": "西区生の松原1-33-1-2F", "searchArea": "生の松原" },
-          { "division": "壱岐", "name": "(株)ニック ニック調剤薬局 西の丘店", "member": "荻野　亜紀", "tel": "895-1102", "fax": "895-1103", "zip": "〒819-0046", "address": "西区西の丘2-1-1", "searchArea": "西の丘" },
-          { "division": "壱岐", "name": "(有)野方セントラル薬局", "member": "佐藤　伸", "tel": "812-1528", "fax": "812-1529", "zip": "〒819-0043", "address": "西区野方1-16-19", "searchArea": "野方" },
-          { "division": "壱岐", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 野方店", "member": "小田原　遥", "tel": "407-5777", "fax": "407-5779", "zip": "〒819-0032", "address": "西区戸切2-18-1", "searchArea": "戸切" },
-          { "division": "壱岐", "name": "(有)ハーブ調剤薬局", "member": "宇戸　江利子", "tel": "881-8243", "fax": "891-0607", "zip": "〒819-0041", "address": "西区拾六町5-15-5", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(株)ワン・ハート パンプキン薬局", "member": "大前　光徳", "tel": "407-3757", "fax": "407-3758", "zip": "〒819-0041", "address": "西区拾六町5-1-30", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(有)福神 福神調剤薬局 拾六町店", "member": "伊佐　珠", "tel": "885-5148", "fax": "885-5188", "zip": "〒819-0041", "address": "西区拾六町5-17-23", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(株)峰松ハカタ薬局 ミネマツ薬局 上山門店", "member": "峯松  善彦", "tel": "883-0113", "fax": "883-0114", "zip": "〒819-0054", "address": "西区上山門1-22-2", "searchArea": "上山門" },
-          { "division": "壱岐", "name": "(株)薬局白十字 薬局白十字 拾六町店", "member": "穴井　明子", "tel": "986-8912", "fax": "982-0064", "zip": "〒819-0041", "address": "西区拾六町1-3-16", "searchArea": "拾六町" },
-          { "division": "壱岐", "name": "(有)吉田薬局 エクセル店", "member": "吉田　武夫", "tel": "882-3365", "fax": "882-3365", "zip": "〒819-0054", "address": "西区上山門1-7-1", "searchArea": "上山門" },
-          { "division": "壱岐", "name": "(有)吉田薬局 下山門店", "member": "清田　美智子", "tel": "891-5220", "fax": "891-5220", "zip": "〒819-0054", "address": "西区上山門1-3-33", "searchArea": "上山門" },
-          { "division": "姪浜", "name": "(有)あかね あかね薬局 すずらん", "member": "浦　景子", "tel": "895-5861", "fax": "895-5862", "zip": "〒819-0006", "address": "西区姪浜駅南2-31-3", "searchArea": "姪浜駅南" },
-          { "division": "姪浜", "name": "(有)あかね あかね薬局 わかば", "member": "浦　寛明", "tel": "895-2674", "fax": "895-2675", "zip": "〒819-0006", "address": "西区姪浜駅南3-15-20", "searchArea": "姪浜駅南" },
-          { "division": "姪浜", "name": "(株)アガペ姪浜薬局", "member": "村里　潤子", "tel": "882-0056", "fax": "882-0054", "zip": "〒819-0002", "address": "西区姪の浜5-9-1福岡市交通局姪浜合同事務所1F", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(有)ミドリ薬局 愛宕浜梅薬局", "member": "中間  道子", "tel": "884-3911", "fax": "882-2451", "zip": "〒819-0013", "address": "西区愛宕浜1-3-1", "searchArea": "愛宕浜" },
-          { "division": "姪浜", "name": "(株)大賀薬局 愛宕店", "member": "増田　千穂", "tel": "892-3800", "fax": "892-3805", "zip": "〒819-0002", "address": "西区姪の浜2-2-53", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)大賀薬局 小戸店", "member": "野﨑　章吾", "tel": "884-0851", "fax": "884-0796", "zip": "〒819-0001", "address": "西区小戸1-16-27", "searchArea": "小戸" },
-          { "division": "姪浜", "name": "(株)大賀薬局 姪の浜４丁目店", "member": "松尾　めぐみ", "tel": "892-3456", "fax": "892-3446", "zip": "〒819-0002", "address": "西区姪の浜4-14-28", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)大賀薬局 姪浜駅前店", "member": "瀧山　さおり", "tel": "884-3034", "fax": "884-3038", "zip": "〒819-0005", "address": "西区内浜1-1-5", "searchArea": "内浜" },
-          { "division": "姪浜", "name": "(株)大賀薬局 姪の浜店", "member": "村上　亜沙美", "tel": "892-4012", "fax": "892-4013", "zip": "〒819-0002", "address": "西区姪の浜4-14-21", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)福岡保健企画 かもめ薬局", "member": "中嶋　秀樹", "tel": "895-1121", "fax": "895-1131", "zip": "〒819-0022", "address": "西区福重5-6-1", "searchArea": "福重" },
-          { "division": "姪浜", "name": "(有)三気堂 クローバー薬局", "member": "塩田　賢功", "tel": "883-9397", "fax": "883-9398", "zip": "〒819-0002", "address": "西区姪の浜4-17-5", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)ストレチア セイコー薬局 福重店", "member": "河野　雅子", "tel": "894-3460", "fax": "894-3461", "zip": "〒819-0022", "address": "西区福重5-19-12", "searchArea": "福重" },
-          { "division": "姪浜", "name": "総合メディカル(株) そうごう薬局 石丸東店", "member": "溝口　典彦", "tel": "883-1861", "fax": "883-1862", "zip": "〒819-0025", "address": "西区石丸2-40-27", "searchArea": "石丸" },
-          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 豊浜", "member": "平田　康喜", "tel": "892-3737", "fax": "892-3737", "zip": "〒819-0014", "address": "西区豊浜2-1-1-1F", "searchArea": "豊浜" },
-          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 橋本", "member": "池野　剛史", "tel": "834-5555", "fax": "834-5555", "zip": "〒819-0031", "address": "西区橋本2-33-33", "searchArea": "橋本" },
-          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 福重", "member": "田村　公次郎", "tel": "881-3931", "fax": "881-3931", "zip": "〒819-0022", "address": "西区福重4-7-4", "searchArea": "福重" },
-          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 姪浜駅前", "member": "江口　正弘", "tel": "883-1021", "fax": "883-1021", "zip": "〒819-0006", "address": "西区姪浜駅南1-4-18", "searchArea": "姪浜駅南" },
-          { "division": "姪浜", "name": "(有)タケオ薬局", "member": "竹尾  眞一", "tel": "881-0920", "fax": "881-0920", "zip": "〒819-0002", "address": "西区姪の浜3-4-2", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)トモエ薬局 トモエ薬局 姪浜駅南店", "member": "赤塚　香奈", "tel": "407-6705", "fax": "407-6715", "zip": "〒819-0006", "address": "西区姪浜駅南2-30-5", "searchArea": "姪浜駅南" },
-          { "division": "姪浜", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 マリナ通り店", "member": "清水　栞", "tel": "882-1255", "fax": "882-1256", "zip": "〒819-0015", "address": "西区愛宕4-13-16", "searchArea": "愛宕" },
-          { "division": "姪浜", "name": "(有)ヘルス・メディック佐賀 ヒマワリ薬局", "member": "磯野　寿光", "tel": "892-3014", "fax": "892-3017", "zip": "〒819-0006", "address": "西区姪浜駅南2-19-22", "searchArea": "姪浜駅南" },
-          { "division": "姪浜", "name": "(有)フクオカ薬局", "member": "田中　克宣", "tel": "883-1795", "fax": "883-1795", "zip": "〒819-0002", "address": "西区姪の浜4-9-18", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)福重調剤薬局", "member": "木下　由貴子", "tel": "894-1258", "fax": "894-1258", "zip": "〒819-0022", "address": "西区福重3-12-9", "searchArea": "福重" },
-          { "division": "姪浜", "name": "(株)福花調剤薬局", "member": "向井　幸子", "tel": "892-3628", "fax": "892-3637", "zip": "〒819-0052", "address": "西区下山門1-13-12", "searchArea": "下山門" },
-          { "division": "姪浜", "name": "(有)福岡医進 マリナ薬局", "member": "天尾　阿季", "tel": "883-8877", "fax": "884-0550", "zip": "〒819-0002", "address": "西区姪の浜4-18-5", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "(株)峰松ハカタ薬局 ミネマツ薬局 姪浜南店", "member": "峯松　裕子", "tel": "885-1721", "fax": "885-1738", "zip": "〒819-0006", "address": "西区姪浜駅南2-19-18", "searchArea": "姪浜駅南" },
-          { "division": "姪浜", "name": "姪浜薬局", "member": "川原  裕伸", "tel": "891-7823", "fax": "891-7823", "zip": "〒819-0002", "address": "西区姪の浜4-15-30", "searchArea": "姪の浜" },
-          { "division": "姪浜", "name": "山久(有) ヤマサキ薬局", "member": "矢野　由美", "tel": "885-3578", "fax": "406-0140", "zip": "〒819-0006", "address": "西区姪浜駅南3-17-3", "searchArea": "姪浜駅南" },
-          { "division": "伊都", "name": "(有)ケイエムファーマ アイビー薬局", "member": "江上　恭介", "tel": "805-5777", "fax": "805-5780", "zip": "〒819-0166", "address": "西区横浜1-9-34", "searchArea": "横浜" },
-          { "division": "伊都", "name": "(株)アガペ横浜薬局", "member": "濵崎　亜希子", "tel": "805-8055", "fax": "805-8056", "zip": "〒819-0380", "address": "西区田尻東3-2570-13", "searchArea": "田尻東" },
-          { "division": "伊都", "name": "イオン九州(株) イオン薬局 福岡伊都店", "member": "松本　賢治", "tel": "805-8706", "fax": "805-8707", "zip": "〒819-0379", "address": "西区北原1-2-1", "searchArea": "北原" },
-          { "division": "伊都", "name": "(株)エンゼル薬局", "member": "矢野　徳宏", "tel": "807-1850", "fax": "807-1850", "zip": "〒819-0167", "address": "西区今宿1-1-10", "searchArea": "今宿" },
-          { "division": "伊都", "name": "(株)大賀薬局 学研都市店", "member": "杉野　由子", "tel": "805-1200", "fax": "805-1208", "zip": "〒819-0367", "address": "西区西都1-3-10", "searchArea": "西都" },
-          { "division": "伊都", "name": "(株)平栄 くれよん薬局 今津", "member": "中山　愛理", "tel": "400-2231", "fax": "400-2232", "zip": "〒819-0165", "address": "西区今津332-5", "searchArea": "今津" },
-          { "division": "伊都", "name": "(株)平栄 くれよん薬局 小田", "member": "石田　千穂子", "tel": "805-2377", "fax": "805-2380", "zip": "〒819-0203", "address": "西区大字小田42-5", "searchArea": "小田" },
-          { "division": "伊都", "name": "(株)平栄 くれよん薬局 元岡", "member": "稲永　幸紀", "tel": "806-1557", "fax": "806-9211", "zip": "〒819-0370", "address": "西区丸川1-1539-1", "searchArea": "丸川" },
-          { "division": "伊都", "name": "(株)ミズ 西都２丁目薬局", "member": "稲田　健一", "tel": "407-0050", "fax": "407-0051", "zip": "〒819-0367", "address": "西区西都2-4-8", "searchArea": "西都" },
-          { "division": "伊都", "name": "(有)ユニゾン さいと薬局", "member": "清竹　理子", "tel": "407-1915", "fax": "407-1973", "zip": "〒819-0378", "address": "西区徳永北18-4", "searchArea": "徳永北" },
-          { "division": "伊都", "name": "(株)なの花九州 さくら薬局 伊都店", "member": "廣吉　一宇", "tel": "707-6305", "fax": "707-6568", "zip": "〒819-0379", "address": "西区北原2-8-20", "searchArea": "北原" },
-          { "division": "伊都", "name": "(株)ライフアート さんくす薬局 今宿東店", "member": "旭　佳奈美", "tel": "407-8813", "fax": "407-8823", "zip": "〒819-0161", "address": "西区今宿東2-23-14", "searchArea": "今宿東" },
-          { "division": "伊都", "name": "(有)西南調剤薬局 周船寺店", "member": "木下　大輔", "tel": "807-4402", "fax": "807-4402", "zip": "〒819-0373", "address": "西区周船寺2-12-42", "searchArea": "周船寺" },
-          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 福岡今宿店", "member": "吉本　雅大", "tel": "400-0711", "fax": "400-0712", "zip": "〒819-0167", "address": "西区今宿3-4-37今宿ﾒﾃﾞｨｶﾙﾋﾞﾙ1F", "searchArea": "今宿" },
-          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 今宿駅前店", "member": "三重野　治子", "tel": "805-5021", "fax": "805-5022", "zip": "〒819-0168", "address": "西区今宿駅前1-2-32", "searchArea": "今宿駅前" },
-          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 周船寺店", "member": "土田  雄司", "tel": "802-0281", "fax": "802-0282", "zip": "〒819-0387", "address": "西区富士見2-14-5", "searchArea": "富士見" },
-          { "division": "伊都", "name": "(株)タカラ薬局 タカラ薬局 伊都", "member": "西村　直子", "tel": "805-7866", "fax": "805-7866", "zip": "〒819-0367", "address": "西区西都1-7-37", "searchArea": "西都" },
-          { "division": "伊都", "name": "(株)タカラ薬局 タカラ薬局 伊都東", "member": "出利葉　亮太", "tel": "405-0959", "fax": "405-0959", "zip": "〒819-0367", "address": "西区西都1-4-8", "searchArea": "西都" },
-          { "division": "伊都", "name": "(株)ツルハグループドラッグ＆ファーマシー西日本 調剤薬局ツルハドラッグ 今宿店", "member": "佐々木　英哲", "tel": "805-1250", "fax": "805-1260", "zip": "〒819-0167", "address": "西区今宿3-40-36", "searchArea": "今宿" },
-          { "division": "伊都", "name": "(株)ソフィア 津田薬局", "member": "津田  和敏", "tel": "806-2372", "fax": "806-6752", "zip": "〒819-0166", "address": "西区横浜1-50-16", "searchArea": "横浜" },
-          { "division": "伊都", "name": "(有)インプローブ つよいこ薬局", "member": "山村  伸也", "tel": "807-6588", "fax": "807-6588", "zip": "〒819-0167", "address": "西区今宿3-40-27-102", "searchArea": "今宿" },
-          { "division": "伊都", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 今宿店", "member": "吉村　晃毅", "tel": "400-1225", "fax": "400-1226", "zip": "〒819-0167", "address": "西区今宿3-6-3", "searchArea": "今宿" },
-          { "division": "伊都", "name": "(株)フクジン 福神調剤薬局 周船寺店", "member": "藤井　岳史", "tel": "805-6055", "fax": "805-6077", "zip": "〒819-0373", "address": "西区周船寺1-5-25ｻﾝﾘｯﾄﾋﾞﾙ1F", "searchArea": "周船寺" },
-          { "division": "伊都", "name": "(株)健康一家 まさおか薬局 今宿店", "member": "正岡　玄光", "tel": "805-7770", "fax": "805-7770", "zip": "〒819-0169", "address": "西区今宿西1-30-25", "searchArea": "今宿西" },
-          { "division": "伊都", "name": "(有)有志堂 もくば薬局 周船寺駅前店", "member": "早川　武志", "tel": "807-8066", "fax": "807-8066", "zip": "〒819-0373", "address": "西区周船寺1-1-32", "searchArea": "周船寺" },
-          { "division": "伊都", "name": "(株)ヤクシンＰＧ ヤクシン薬局 伊都店", "member": "鍋島　博美", "tel": "805-6666", "fax": "805-6667", "zip": "〒819-0367", "address": "西区西都1-1-46", "searchArea": "西都" },
-          { "division": "伊都", "name": "(有)コムズ ライフ薬局", "member": "小森　健治", "tel": "805-8755", "fax": "805-8756", "zip": "〒819-0168", "address": "西区今宿駅前1-7-5", "searchArea": "今宿駅前" },
-          { "division": "伊都", "name": "(有)ＦＲＰ リライ薬局 学研都市店", "member": "柳原　真理子", "tel": "805-6210", "fax": "805-6211", "zip": "〒819-0379", "address": "西区北原1-13-3FAMS学研都市1F", "searchArea": "北原" }
+          { "division": "壱岐", "name": "(株)アインファーマシーズ アイン薬局 生の松原店", "tel": "881-0530", "fax": "881-0068", "zip": "〒819-0055", "address": "西区生の松原3-25-18", "searchArea": "生の松原" },
+          { "division": "壱岐", "name": "(株)アガペ上山門薬局", "tel": "892-3877", "fax": "892-3878", "zip": "〒819-0054", "address": "西区上山門1-14-1", "searchArea": "上山門" },
+          { "division": "壱岐", "name": "(有)イッセイ イッセイ調剤薬局", "tel": "811-6380", "fax": "811-6380", "zip": "〒819-0031", "address": "西区橋本2-17-28", "searchArea": "橋本" },
+          { "division": "壱岐", "name": "(株)大賀薬局 石丸店", "tel": "882-3051", "fax": "882-3987", "zip": "〒819-0025", "address": "西区石丸3-1-42", "searchArea": "石丸" },
+          { "division": "壱岐", "name": "(株)大賀薬局 拾六町店", "tel": "882-8117", "fax": "882-8276", "zip": "〒819-0045", "address": "西区拾六町団地1-19", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)コ－シン薬局", "tel": "884-1837", "fax": "400-4896", "zip": "〒819-0041", "address": "西区拾六町1-19-1", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(株)ココカラファインヘルスケア ココカラファイン薬局 白十字病院店", "tel": "407-2272", "fax": "407-2273", "zip": "〒819-0025", "address": "西区石丸4-3-1駐車場棟1階", "searchArea": "石丸" },
+          { "division": "壱岐", "name": "(株)なの花九州 さくら薬局 福リハ店", "tel": "834-6580", "fax": "819-8551", "zip": "〒819-8551", "address": "西区野方7-770", "searchArea": "野方" },
+          { "division": "壱岐", "name": "(株)アールファーマ セイブ薬局", "tel": "812-0122", "fax": "812-0123", "zip": "〒819-0037", "address": "西区飯盛520-2", "searchArea": "飯盛" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 石丸店", "tel": "885-1631", "fax": "885-1632", "zip": "〒819-0025", "address": "西区石丸3-7-30", "searchArea": "石丸" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 下山門店", "tel": "892-1511", "fax": "892-1519", "zip": "〒819-0051", "address": "西区下山門団地40-1", "searchArea": "下山門団地" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 戸切店", "tel": "892-5041", "fax": "892-5042", "zip": "〒819-0032", "address": "西区戸切2-13-10", "searchArea": "戸切" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 野方店", "tel": "812-1601", "fax": "812-1602", "zip": "〒819-0043", "address": "西区野方7-759-4", "searchArea": "野方" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 野方東店", "tel": "812-5231", "fax": "812-5232", "zip": "〒819-0043", "address": "西区野方6-36-26", "searchArea": "野方" },
+          { "division": "壱岐", "name": "大晃調剤薬局(有)", "tel": "811-0928", "fax": "811-0928", "zip": "〒819-0042", "address": "西区壱岐団地136-7", "searchArea": "壱岐団地" },
+          { "division": "壱岐", "name": "(株)タカラ薬局 タカラ薬局 西の丘", "tel": "891-1298", "fax": "891-1298", "zip": "〒819-0041", "address": "西区拾六町3-8-20", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)テクノメディカ ＴＭ調剤薬局 野方６丁目店", "tel": "894-8688", "fax": "894-8687", "zip": "〒819-0043", "address": "西区野方6-26-8", "searchArea": "野方" },
+          { "division": "壱岐", "name": "(有)イッセイ ナカガミ薬局 センタービル店", "tel": "811-6530", "fax": "812-1136", "zip": "〒819-0042", "address": "西区壱岐団地135-11", "searchArea": "壱岐団地" },
+          { "division": "壱岐", "name": "(株)ニック ニック調剤薬局 生の松原店", "tel": "892-1866", "fax": "892-1867", "zip": "〒819-0055", "address": "西区生の松原1-33-1-2F", "searchArea": "生の松原" },
+          { "division": "壱岐", "name": "(株)ニック ニック調剤薬局 西の丘店", "tel": "895-1102", "fax": "895-1103", "zip": "〒819-0046", "address": "西区西の丘2-1-1", "searchArea": "西の丘" },
+          { "division": "壱岐", "name": "(有)野方セントラル薬局", "tel": "812-1528", "fax": "812-1529", "zip": "〒819-0043", "address": "西区野方1-16-19", "searchArea": "野方" },
+          { "division": "壱岐", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 野方店", "tel": "407-5777", "fax": "407-5779", "zip": "〒819-0032", "address": "西区戸切2-18-1", "searchArea": "戸切" },
+          { "division": "壱岐", "name": "(有)ハーブ調剤薬局", "tel": "881-8243", "fax": "891-0607", "zip": "〒819-0041", "address": "西区拾六町5-15-5", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(株)ワン・ハート パンプキン薬局", "tel": "407-3757", "fax": "407-3758", "zip": "〒819-0041", "address": "西区拾六町5-1-30", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)福神 福神調剤薬局 拾六町店", "tel": "885-5148", "fax": "885-5188", "zip": "〒819-0041", "address": "西区拾六町5-17-23", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(株)峰松ハカタ薬局 ミネマツ薬局 上山門店", "tel": "883-0113", "fax": "883-0114", "zip": "〒819-0054", "address": "西区上山門1-22-2", "searchArea": "上山門" },
+          { "division": "壱岐", "name": "(株)薬局白十字 薬局白十字 拾六町店", "tel": "986-8912", "fax": "982-0064", "zip": "〒819-0041", "address": "西区拾六町1-3-16", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)吉田薬局 エクセル店", "tel": "882-3365", "fax": "882-3365", "zip": "〒819-0054", "address": "西区上山門1-7-1", "searchArea": "上山門" },
+          { "division": "壱岐", "name": "(有)吉田薬局 下山門店", "tel": "891-5220", "fax": "891-5220", "zip": "〒819-0054", "address": "西区上山門1-3-33", "searchArea": "上山門" },
+          { "division": "姪浜", "name": "(有)あかね あかね薬局 すずらん", "tel": "895-5861", "fax": "895-5862", "zip": "〒819-0006", "address": "西区姪浜駅南2-31-3", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(有)あかね あかね薬局 わかば", "tel": "895-2674", "fax": "895-2675", "zip": "〒819-0006", "address": "西区姪浜駅南3-15-20", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(株)アガペ姪浜薬局", "tel": "882-0056", "fax": "882-0054", "zip": "〒819-0002", "address": "西区姪の浜5-9-1福岡市交通局姪浜合同事務所1F", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(有)ミドリ薬局 愛宕浜梅薬局", "tel": "884-3911", "fax": "882-2451", "zip": "〒819-0013", "address": "西区愛宕浜1-3-1", "searchArea": "愛宕浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 愛宕店", "tel": "892-3800", "fax": "892-3805", "zip": "〒819-0002", "address": "西区姪の浜2-2-53", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 小戸店", "tel": "884-0851", "fax": "884-0796", "zip": "〒819-0001", "address": "西区小戸1-16-27", "searchArea": "小戸" },
+          { "division": "姪浜", "name": "(株)大賀薬局 姪の浜４丁目店", "tel": "892-3456", "fax": "892-3446", "zip": "〒819-0002", "address": "西区姪の浜4-14-28", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 姪浜駅前店", "tel": "884-3034", "fax": "884-3038", "zip": "〒819-0005", "address": "西区内浜1-1-5", "searchArea": "内浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 姪の浜店", "tel": "892-4012", "fax": "892-4013", "zip": "〒819-0002", "address": "西区姪の浜4-14-21", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)福岡保健企画 かもめ薬局", "tel": "895-1121", "fax": "895-1131", "zip": "〒819-0022", "address": "西区福重5-6-1", "searchArea": "福重" },
+          { "division": "姪浜", "name": "(有)三気堂 クローバー薬局", "tel": "883-9397", "fax": "883-9398", "zip": "〒819-0002", "address": "西区姪の浜4-17-5", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)ストレチア セイコー薬局 福重店", "tel": "894-3460", "fax": "894-3461", "zip": "〒819-0022", "address": "西区福重5-19-12", "searchArea": "福重" },
+          { "division": "姪浜", "name": "総合メディカル(株) そうごう薬局 石丸東店", "tel": "883-1861", "fax": "883-1862", "zip": "〒819-0025", "address": "西区石丸2-40-27", "searchArea": "石丸" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 豊浜", "tel": "892-3737", "fax": "892-3737", "zip": "〒819-0014", "address": "西区豊浜2-1-1-1F", "searchArea": "豊浜" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 橋本", "tel": "834-5555", "fax": "834-5555", "zip": "〒819-0031", "address": "西区橋本2-33-33", "searchArea": "橋本" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 福重", "tel": "881-3931", "fax": "881-3931", "zip": "〒819-0022", "address": "西区福重4-7-4", "searchArea": "福重" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 姪浜駅前", "tel": "883-1021", "fax": "883-1021", "zip": "〒819-0006", "address": "西区姪浜駅南1-4-18", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(有)タケオ薬局", "tel": "881-0920", "fax": "881-0920", "zip": "〒819-0002", "address": "西区姪の浜3-4-2", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)トモエ薬局 トモエ薬局 姪浜駅南店", "tel": "407-6705", "fax": "407-6715", "zip": "〒819-0006", "address": "西区姪浜駅南2-30-5", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 マリナ通り店", "tel": "882-1255", "fax": "882-1256", "zip": "〒819-0015", "address": "西区愛宕4-13-16", "searchArea": "愛宕" },
+          { "division": "姪浜", "name": "(有)ヘルス・メディック佐賀 ヒマワリ薬局", "tel": "892-3014", "fax": "892-3017", "zip": "〒819-0006", "address": "西区姪浜駅南2-19-22", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(有)フクオカ薬局", "tel": "883-1795", "fax": "883-1795", "zip": "〒819-0002", "address": "西区姪の浜4-9-18", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)福重調剤薬局", "tel": "894-1258", "fax": "894-1258", "zip": "〒819-0022", "address": "西区福重3-12-9", "searchArea": "福重" },
+          { "division": "姪浜", "name": "(株)福花調剤薬局", "tel": "892-3628", "fax": "892-3637", "zip": "〒819-0052", "address": "西区下山門1-13-12", "searchArea": "下山門" },
+          { "division": "姪浜", "name": "(有)福岡医進 マリナ薬局", "tel": "883-8877", "fax": "884-0550", "zip": "〒819-0002", "address": "西区姪の浜4-18-5", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)峰松ハカタ薬局 ミネマツ薬局 姪浜南店", "tel": "885-1721", "fax": "885-1738", "zip": "〒819-0006", "address": "西区姪浜駅南2-19-18", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "姪浜薬局", "tel": "891-7823", "fax": "891-7823", "zip": "〒819-0002", "address": "西区姪の浜4-15-30", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "山久(有) ヤマサキ薬局", "tel": "885-3578", "fax": "406-0140", "zip": "〒819-0006", "address": "西区姪浜駅南3-17-3", "searchArea": "姪浜駅南" },
+          { "division": "伊都", "name": "(有)ケイエムファーマ アイビー薬局", "tel": "805-5777", "fax": "805-5780", "zip": "〒819-0166", "address": "西区横浜1-9-34", "searchArea": "横浜" },
+          { "division": "伊都", "name": "(株)アガペ横浜薬局", "tel": "805-8055", "fax": "805-8056", "zip": "〒819-0380", "address": "西区田尻東3-2570-13", "searchArea": "田尻東" },
+          { "division": "伊都", "name": "イオン九州(株) イオン薬局 福岡伊都店", "tel": "805-8706", "fax": "805-8707", "zip": "〒819-0379", "address": "西区北原1-2-1", "searchArea": "北原" },
+          { "division": "伊都", "name": "(株)エンゼル薬局", "tel": "807-1850", "fax": "807-1850", "zip": "〒819-0167", "address": "西区今宿1-1-10", "searchArea": "今宿" },
+          { "division": "伊都", "name": "(株)大賀薬局 学研都市店", "tel": "805-1200", "fax": "805-1208", "zip": "〒819-0367", "address": "西区西都1-3-10", "searchArea": "西都" },
+          { "division": "伊都", "name": "(株)平栄 くれよん薬局 今津", "tel": "400-2231", "fax": "400-2232", "zip": "〒819-0165", "address": "西区今津332-5", "searchArea": "今津" },
+          { "division": "伊都", "name": "(株)平栄 くれよん薬局 小田", "tel": "805-2377", "fax": "805-2380", "zip": "〒819-0203", "address": "西区大字小田42-5", "searchArea": "小田" },
+          { "division": "伊都", "name": "(株)平栄 くれよん薬局 元岡", "tel": "806-1557", "fax": "806-9211", "zip": "〒819-0370", "address": "西区丸川1-1539-1", "searchArea": "丸川" },
+          { "division": "伊都", "name": "(株)ミズ 西都２丁目薬局", "tel": "407-0050", "fax": "407-0051", "zip": "〒819-0367", "address": "西区西都2-4-8", "searchArea": "西都" },
+          { "division": "伊都", "name": "(有)ユニゾン さいと薬局", "tel": "407-1915", "fax": "407-1973", "zip": "〒819-0378", "address": "西区徳永北18-4", "searchArea": "徳永北" },
+          { "division": "伊都", "name": "(株)なの花九州 さくら薬局 伊都店", "tel": "707-6305", "fax": "707-6568", "zip": "〒819-0379", "address": "西区北原2-8-20", "searchArea": "北原" },
+          { "division": "伊都", "name": "(株)ライフアート さんくす薬局 今宿東店", "tel": "407-8813", "fax": "407-8823", "zip": "〒819-0161", "address": "西区今宿東2-23-14", "searchArea": "今宿東" },
+          { "division": "伊都", "name": "(有)西南調剤薬局 周船寺店", "tel": "807-4402", "fax": "807-4402", "zip": "〒819-0373", "address": "西区周船寺2-12-42", "searchArea": "周船寺" },
+          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 福岡今宿店", "tel": "400-0711", "fax": "400-0712", "zip": "〒819-0167", "address": "西区今宿3-4-37今宿ﾒﾃﾞｨｶﾙﾋﾞﾙ1F", "searchArea": "今宿" },
+          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 今宿駅前店", "tel": "805-5021", "fax": "805-5022", "zip": "〒819-0168", "address": "西区今宿駅前1-2-32", "searchArea": "今宿駅前" },
+          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 周船寺店", "tel": "802-0281", "fax": "802-0282", "zip": "〒819-0387", "address": "西区富士見2-14-5", "searchArea": "富士見" },
+          { "division": "伊都", "name": "(株)タカラ薬局 タカラ薬局 伊都", "tel": "805-7866", "fax": "805-7866", "zip": "〒819-0367", "address": "西区西都1-7-37", "searchArea": "西都" },
+          { "division": "伊都", "name": "(株)タカラ薬局 タカラ薬局 伊都東", "tel": "405-0959", "fax": "405-0959", "zip": "〒819-0367", "address": "西区西都1-4-8", "searchArea": "西都" },
+          { "division": "伊都", "name": "(株)ツルハグループドラッグ＆ファーマシー西日本 調剤薬局ツルハドラッグ 今宿店", "tel": "805-1250", "fax": "805-1260", "zip": "〒819-0167", "address": "西区今宿3-40-36", "searchArea": "今宿" },
+          { "division": "伊都", "name": "(株)ソフィア 津田薬局", "tel": "806-2372", "fax": "806-6752", "zip": "〒819-0166", "address": "西区横浜1-50-16", "searchArea": "横浜" },
+          { "division": "伊都", "name": "(有)インプローブ つよいこ薬局", "tel": "807-6588", "fax": "807-6588", "zip": "〒819-0167", "address": "西区今宿3-40-27-102", "searchArea": "今宿" },
+          { "division": "伊都", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 今宿店", "tel": "400-1225", "fax": "400-1226", "zip": "〒819-0167", "address": "西区今宿3-6-3", "searchArea": "今宿" },
+          { "division": "伊都", "name": "(株)フクジン 福神調剤薬局 周船寺店", "tel": "805-6055", "fax": "805-6077", "zip": "〒819-0373", "address": "西区周船寺1-5-25ｻﾝﾘｯﾄﾋﾞﾙ1F", "searchArea": "周船寺" },
+          { "division": "伊都", "name": "(株)健康一家 まさおか薬局 今宿店", "tel": "805-7770", "fax": "805-7770", "zip": "〒819-0169", "address": "西区今宿西1-30-25", "searchArea": "今宿西" },
+          { "division": "伊都", "name": "(有)有志堂 もくば薬局 周船寺駅前店", "tel": "807-8066", "fax": "807-8066", "zip": "〒819-0373", "address": "西区周船寺1-1-32", "searchArea": "周船寺" },
+          { "division": "伊都", "name": "(株)ヤクシンＰＧ ヤクシン薬局 伊都店", "tel": "805-6666", "fax": "805-6667", "zip": "〒819-0367", "address": "西区西都1-1-46", "searchArea": "西都" },
+          { "division": "伊都", "name": "(有)コムズ ライフ薬局", "tel": "805-8755", "fax": "805-8756", "zip": "〒819-0168", "address": "西区今宿駅前1-7-5", "searchArea": "今宿駅前" },
+          { "division": "伊都", "name": "(有)ＦＲＰ リライ薬局 学研都市店", "tel": "805-6210", "fax": "805-6211", "zip": "〒819-0379", "address": "西区北原1-13-3FAMS学研都市1F", "searchArea": "北原" }
         ];
     </script>
 
