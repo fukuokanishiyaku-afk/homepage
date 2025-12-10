@@ -33,12 +33,24 @@
                         brandGreen: "#4CAF50",
                         brandDarkGreen: "#1B5E20",
                         brandYellow: "#FFD600",
+                        brandOrange: "#FF9800",
                         glassWhite: "rgba(255, 255, 255, 0.75)",
                         glassSurface: "rgba(255, 255, 255, 0.4)",
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
                         'neon': '0 0 10px rgba(76, 175, 80, 0.3)',
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
@@ -152,6 +164,71 @@
             transform: translateY(0);
         }
 
+        /* モーダルのスタイル */
+        #search-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #search-modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #search-modal:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* チャットボットのスタイル */
+        #chatbot-window {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            transform-origin: bottom right;
+        }
+        #chatbot-window.hidden {
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .chat-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+        }
+        .chat-message.user {
+            background: #4CAF50;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message.ai {
+            background: white;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #aaa;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+            margin: 0 1px;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
         /* スクロールバー */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -166,22 +243,20 @@
 
     <!-- ==========================================
           トップナビゲーション & ヘッダーエリア
-          ・要素を中央寄せにし、間隔を詰める
-          ・アイコンと文字を最大化
     ========================================== -->
     <div class="relative z-50 w-full flex flex-col xl:flex-row justify-center items-center xl:items-center pt-8 px-4 pointer-events-none gap-4">
         
-        <!-- 左側: アイコン (極大サイズ) -->
+        <!-- 左側: アイコン -->
         <div class="pointer-events-auto shrink-0">
             <a href="#" class="glass-card flex items-center justify-center p-4 hover:scale-105 transition-transform aspect-square w-48 h-48 md:w-64 md:h-64 bg-white/80 rounded-3xl">
                 <img src="https://i.postimg.cc/FzCysGFc/favicon.png" alt="福岡市西区薬剤師会ロゴ" class="w-full h-full object-contain">
             </a>
         </div>
 
-        <!-- 右側: タイトル & ボタン群 (コンテナでまとめて近づける) -->
+        <!-- 右側: タイトル & ボタン群 -->
         <div class="flex flex-col items-center xl:items-start gap-3 pointer-events-auto w-full xl:w-auto">
             
-            <!-- タイトル (極大サイズ・行間調整) -->
+            <!-- タイトル -->
             <div class="text-center xl:text-left">
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight title-gradient drop-shadow-sm leading-tight py-2">
                     福岡市西区薬剤師会
@@ -189,26 +264,40 @@
                 <div class="h-2 w-32 bg-gradient-to-r from-brandYellow to-orange-300 mx-auto xl:ml-1 xl:mr-0 mt-1 rounded-full shadow-neon"></div>
             </div>
 
-            <!-- ボタン群 (大型化・間隔調整) -->
+            <!-- ボタン群 -->
             <div class="flex flex-wrap items-center justify-center xl:justify-start gap-4 mt-2">
-                <!-- ボタン1: 会員薬局検索 -->
-                <a href="https://www.fpa.gr.jp/citizen/search_pharmacy/" target="_blank" rel="noopener noreferrer"
-                   class="glass-card !rounded-full px-8 py-4 flex items-center gap-4 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
-                    <div class="bg-brandGreen text-white p-2 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
+                
+                <!-- ボタン0: 西区会員薬局検索 -->
+                <button onclick="openSearchModal()"
+                   class="glass-card !rounded-full px-6 py-4 flex items-center gap-3 text-white bg-brandGreen/90 font-bold hover:bg-brandDarkGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1 ring-2 ring-brandYellow/50 ring-offset-2 ring-offset-white">
+                    <div class="bg-white text-brandGreen p-2 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <span class="tracking-wide text-lg md:text-2xl">会員薬局検索</span>
+                    <div class="text-left">
+                        <span class="block text-xs text-brandYellow font-en tracking-wider">SEARCH AREA</span>
+                        <span class="text-lg md:text-xl">西区の薬局を探す</span>
+                    </div>
+                </button>
+
+                <!-- ボタン1: 全体の会員薬局検索 -->
+                <a href="https://www.fpa.gr.jp/citizen/search_pharmacy/" target="_blank" rel="noopener noreferrer"
+                   class="glass-card !rounded-full px-6 py-4 flex items-center gap-3 text-gray-600 font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-gray-200 transform hover:-translate-y-1">
+                    <div class="bg-gray-200 text-gray-600 p-2 rounded-full transition-transform shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-xs text-gray-400 font-en tracking-wider">FUKUOKA CITY</span>
+                        <span class="text-sm md:text-base">市薬 全体検索へ</span>
+                    </div>
                 </a>
 
-                <!-- ボタン2: 西支部便り2025年秋号 (PDFリンク) -->
+                <!-- ボタン2: 西支部便り -->
                 <a href="西支部便り2025年秋号.pdf" target="_blank" rel="noopener noreferrer"
-                   class="glass-card !rounded-full px-8 py-4 flex items-center gap-4 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
+                   class="glass-card !rounded-full px-6 py-4 flex items-center gap-3 text-brandDarkGreen font-bold hover:bg-white/90 hover:text-brandGreen transition-all group shadow-md border-brandGreen/30 transform hover:-translate-y-1">
                     <div class="bg-brandYellow text-brandDarkGreen p-2 rounded-full group-hover:rotate-12 transition-transform shadow-sm">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
-                    <span class="tracking-wide text-lg md:text-2xl">西支部便り2025年秋号</span>
+                    <span class="text-sm md:text-base">西支部便り<br class="hidden md:inline"><span class="text-xs">2025年秋号</span></span>
                 </a>
             </div>
         </div>
@@ -217,15 +306,14 @@
 
     <main class="max-w-6xl mx-auto px-6 py-8 relative z-10 space-y-20 mt-4">
         
-        <!-- コンテンツエリアの開始位置調整 -->
+        <!-- コンテンツエリア -->
 
-        <!-- 1. トップ画像 (Parallax Effect) -->
+        <!-- 1. トップ画像 -->
         <section class="glass-card p-4 reveal" data-tilt>
             <div class="img-container h-[350px] md:h-[550px] relative shadow-lg">
                 <img src="https://i.postimg.cc/JhwvTW9j/Generated-Image-December-07-2025-4-27AM.jpg" 
                      alt="トップ画像" 
                      class="img-zoom">
-                <!-- 装飾テキスト -->
                 <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white z-10 pointer-events-none transform translate-z-10">
                     <p class="font-en text-sm tracking-widest opacity-80 mb-1">OFFICIAL WEBSITE</p>
                     <p class="text-2xl md:text-3xl font-bold drop-shadow-lg">地域とともに、未来へ。</p>
@@ -235,8 +323,6 @@
 
         <!-- 2. 会長挨拶・写真 -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal items-center">
-            
-            <!-- 会長写真エリア (左側) -->
             <div class="glass-card p-4 aspect-square flex flex-col" data-tilt>
                 <div class="img-container w-full flex-grow relative shadow-inner bg-gray-100 overflow-hidden">
                     <img src="https://i.postimg.cc/C10qVcWb/mu-xia-hui-zhang.png" 
@@ -248,30 +334,27 @@
                     <p class="text-xl font-bold text-brandDarkGreen">木下 大輔</p>
                 </div>
             </div>
-
-            <!-- 会長挨拶テキスト (右側) -->
             <div class="glass-card p-8 md:p-12 aspect-square flex flex-col justify-center items-center text-center" data-tilt data-tilt-max="5">
-                <div class="mb-6">
-                    <!-- SEO対策 3: <h2>タグの使用 -->
+                <div class="mb-6 relative">
                     <h2 class="text-2xl md:text-3xl font-bold text-brandDarkGreen relative inline-block">
                         会長挨拶
                         <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brandYellow rounded-full left-1/2 -translate-x-1/2"></span>
                     </h2>
+                    
+                    <!-- ✨ Gemini API Feature: TTS Button -->
+                    <button onclick="readGreeting()" id="tts-btn" class="absolute -right-8 top-0 md:-right-16 md:top-1 p-2 bg-brandGreen/10 hover:bg-brandGreen text-brandGreen hover:text-white rounded-full transition-all group" title="✨ AI音声で読み上げる">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                        <span class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">✨ AI音声で聞く</span>
+                        <!-- Loading Spinner -->
+                        <svg id="tts-loading" class="animate-spin h-5 w-5 text-brandGreen hidden absolute top-2 left-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    </button>
+
                 </div>
-                
-                <div class="space-y-4 text-gray-700 leading-relaxed text-sm md:text-base font-medium">
-                    <p>
-                        福岡市西区薬剤師会のHPをご覧いただきありがとうございます。
-                    </p>
-                    <p>
-                        今年度、会員の皆様のご要望を受け「麻薬小売業者間譲渡許可制度」の共同申請を再開いたしました。
-                    </p>
-                    <p>
-                        今回は円滑な運用のために、備蓄情報共有システム「VPCSneo」への登録を必須とする新ルールを設けております。詳細は会員ページをご確認ください。
-                    </p>
-                    <p>
-                        現場の声を大切に、地域医療の未来のために活動してまいります。
-                    </p>
+                <div id="greeting-text" class="space-y-4 text-gray-700 leading-relaxed text-sm md:text-base font-medium">
+                    <p>福岡市西区薬剤師会のHPをご覧いただきありがとうございます。</p>
+                    <p>今年度、会員の皆様のご要望を受け「麻薬小売業者間譲渡許可制度」の共同申請を再開いたしました。</p>
+                    <p>今回は円滑な運用のために、備蓄情報共有システム「VPCSneo」への登録を必須とする新ルールを設けております。詳細は会員ページをご確認ください。</p>
+                    <p>現場の声を大切に、地域医療の未来のために活動してまいります。</p>
                 </div>
             </div>
         </section>
@@ -282,14 +365,10 @@
                 <div class="w-2 h-8 bg-brandGreen rounded-full mr-4 shadow-neon"></div>
                 <h2 class="text-3xl font-bold text-brandDarkGreen">役員名簿</h2>
             </div>
-            
             <div class="overflow-x-auto">
                 <table class="w-full text-left custom-table text-sm md:text-base border-collapse">
                     <thead>
-                        <tr>
-                            <th class="w-1/3 md:w-1/4">役職</th>
-                            <th>氏名</th>
-                        </tr>
+                        <tr><th class="w-1/3 md:w-1/4">役職</th><th>氏名</th></tr>
                     </thead>
                     <tbody class="text-gray-700">
                         <tr><td>会長</td><td class="font-bold">木下 大輔</td></tr>
@@ -341,31 +420,19 @@
                 </h2>
                 <span class="font-en text-xs bg-brandDarkGreen text-white px-4 py-2 rounded-full tracking-widest shadow-lg">NEWS & REPORT</span>
             </div>
-
-            <!-- Gridレイアウト -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <!-- 新規記事: 市民向け講座 -->
                 <article class="glass-card group h-full flex flex-col" data-tilt data-tilt-max="3">
                     <div class="h-56 overflow-hidden relative border-b border-white/30">
-                        <img src="https://i.postimg.cc/Y97c1MfQ/251115yi-yao-pin-qi-fa-jiang-xi-hui.jpg" 
-                             alt="市民講座風景" 
-                             class="img-zoom group-hover:scale-110">
-                        <div class="absolute top-4 left-4 bg-brandYellow/90 backdrop-blur text-brandDarkGreen text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
-                            活動報告
-                        </div>
-                        <div class="absolute bottom-2 right-2 bg-brandGreen/80 backdrop-blur text-white text-[10px] px-2 py-1 rounded shadow-sm">
-                            市民向け
-                        </div>
+                        <img src="https://i.postimg.cc/Y97c1MfQ/251115yi-yao-pin-qi-fa-jiang-xi-hui.jpg" alt="市民講座風景" class="img-zoom group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-brandYellow/90 backdrop-blur text-brandDarkGreen text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">活動報告</div>
+                        <div class="absolute bottom-2 right-2 bg-brandGreen/80 backdrop-blur text-white text-[10px] px-2 py-1 rounded shadow-sm">市民向け</div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="font-en text-sm text-gray-400">2025.11.15</span>
                             <div class="h-px bg-gray-300 flex-grow"></div>
                         </div>
-                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">
-                            福重公民館 市民講座「今知っておきたいくすりの知識と薬局のこと」
-                        </h3>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">福重公民館 市民講座「今知っておきたいくすりの知識と薬局のこと」</h3>
                         <div class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">
                             <p class="mb-3">福岡市西区健康推進科の依頼を受け、高齢者約20名を対象に講演を行いました。</p>
                             <div class="bg-white/50 p-3 rounded border border-white/60 text-xs text-gray-700">
@@ -373,7 +440,6 @@
                                 <p><span class="font-bold text-brandDarkGreen">内容：</span>かかりつけ・医療DXなど</p>
                             </div>
                         </div>
-                        <!-- PDFダウンロードボタン -->
                         <div class="mt-auto pt-4 border-t border-gray-200/50">
                             <button onclick="alert('実際のPDFリンクへ飛びます')" class="flex items-center justify-center w-full py-2 bg-brandGreen/10 text-brandDarkGreen font-bold rounded-lg hover:bg-brandGreen hover:text-white transition-all text-sm group-hover:shadow-md">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -382,61 +448,36 @@
                         </div>
                     </div>
                 </article>
-
-                <!-- 記事1：麻薬説明会 -->
                 <article class="glass-card group h-full flex flex-col" data-tilt data-tilt-max="3">
                     <div class="h-56 overflow-hidden relative border-b border-white/30">
-                        <img src="https://i.postimg.cc/yd4YK5tv/ma-yao-shuo-ming-hui.png" 
-                             alt="説明会風景" 
-                             class="img-zoom group-hover:scale-110">
-                        <div class="absolute top-4 left-4 bg-brandYellow/90 backdrop-blur text-brandDarkGreen text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
-                            活動報告
-                        </div>
-                        <div class="absolute bottom-2 right-2 bg-gray-600/80 backdrop-blur text-white text-[10px] px-2 py-1 rounded shadow-sm">
-                            会員向け
-                        </div>
+                        <img src="https://i.postimg.cc/yd4YK5tv/ma-yao-shuo-ming-hui.png" alt="説明会風景" class="img-zoom group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-brandYellow/90 backdrop-blur text-brandDarkGreen text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">活動報告</div>
+                        <div class="absolute bottom-2 right-2 bg-gray-600/80 backdrop-blur text-white text-[10px] px-2 py-1 rounded shadow-sm">会員向け</div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="font-en text-sm text-gray-400">2025.11.05</span>
                             <div class="h-px bg-gray-300 flex-grow"></div>
                         </div>
-                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">
-                            麻薬小売業者間譲渡制度に関する説明会 開催報告
-                        </h3>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">
-                            西市民センターにて説明会を開催し、15名の先生方にご参加いただきました。麻薬の適正な管理と運用、申請手続きについて解説を行いました。
-                        </p>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">麻薬小売業者間譲渡制度に関する説明会 開催報告</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">西市民センターにて説明会を開催し、15名の先生方にご参加いただきました。麻薬の適正な管理と運用、申請手続きについて解説を行いました。</p>
                         <div class="mt-auto">
-                            <a href="https://www.fpa.gr.jp/kaiin/113178/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-bold text-brandGreen hover:text-brandDarkGreen transition-all group-hover:translate-x-2">
-                                READ MORE 
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </a>
+                            <a href="https://www.fpa.gr.jp/kaiin/113178/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-bold text-brandGreen hover:text-brandDarkGreen transition-all group-hover:translate-x-2">READ MORE <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
                         </div>
                     </div>
                 </article>
-
-                <!-- 記事2：西結会ご案内 -->
                 <article class="glass-card group h-full flex flex-col md:col-span-2" data-tilt data-tilt-max="3">
                     <div class="h-56 md:h-72 overflow-hidden relative border-b border-white/30">
-                        <img src="https://i.postimg.cc/Zn7DDyXW/xi-jie-hui.jpg" 
-                             alt="西結会イメージ" 
-                             class="img-zoom group-hover:scale-110 w-full h-full object-cover">
-                        <div class="absolute top-4 left-4 bg-brandGreen/90 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">
-                            お知らせ
-                        </div>
-                        <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">
-                            ※写真は去年のものです
-                        </div>
+                        <img src="https://i.postimg.cc/Zn7DDyXW/xi-jie-hui.jpg" alt="西結会イメージ" class="img-zoom group-hover:scale-110 w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brandGreen/90 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-sm">お知らせ</div>
+                        <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">※写真は去年のものです</div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="font-en text-sm text-gray-400">2025.12.07</span>
                             <div class="h-px bg-gray-300 flex-grow"></div>
                         </div>
-                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">
-                            会員親睦会「西結会」ご案内
-                        </h3>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 group-hover:text-brandGreen transition-colors line-clamp-2">会員親睦会「西結会」ご案内</h3>
                         <div class="text-sm text-gray-600 leading-relaxed mb-4 flex-grow">
                             <p class="mb-3">会員相互の親睦を深める「西結会」を開催します。今年は音楽イベントも予定しております。</p>
                             <div class="bg-white/50 p-4 rounded border border-white/60 text-xs text-gray-700">
@@ -447,102 +488,393 @@
                         </div>
                     </div>
                 </article>
-
             </div>
         </section>
 
         <!-- フッター -->
-        <footer class="mt-24 py-12 border-t border-brandGreen/20 text-center relative overflow-hidden">
+        <footer class="mt-24 py-12 border-t border-brandGreen/20 text-center relative overflow-hidden bg-white/50">
             <div class="absolute inset-0 bg-gradient-to-t from-brandGreen/5 to-transparent -z-10"></div>
-            <p class="font-en text-brandDarkGreen font-bold text-lg mb-2">Fukuoka City Nishi Ward Pharmaceutical Association</p>
+            
+            <div class="flex flex-col items-center justify-center gap-2 mb-4">
+                <!-- アイコン (リンク付き) -->
+                <div class="flex items-center gap-4">
+                    <a href="#" class="hover:opacity-80 transition-opacity hover:scale-105 transform">
+                        <img src="https://i.postimg.cc/FzCysGFc/favicon.png" alt="福岡市西区薬剤師会" class="w-10 h-10 md:w-12 md:h-12 object-contain">
+                    </a>
+                    <p class="font-en text-brandDarkGreen font-bold text-lg md:text-xl">Fukuoka City Nishi Ward Pharmaceutical Association</p>
+                </div>
+            </div>
+            
             <p class="text-xs text-gray-500 tracking-widest">
                 &copy; 2025 福岡市西区薬剤師会 All Rights Reserved.
             </p>
         </footer>
     </main>
 
-    <!-- Three.js: 高度なネットワークパーティクルアニメーション -->
+    <!-- ==========================================
+          検索モーダル (NEW UI Design)
+    ========================================== -->
+    <div id="search-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeSearchModal()"></div>
+        <div class="relative w-full max-w-4xl h-[85vh] mx-4 glass-card bg-white/95 flex flex-col overflow-hidden shadow-2xl">
+            
+            <!-- 1. Header & Keyword Search (Fixed Top) -->
+            <div class="bg-gradient-to-r from-white to-gray-50 border-b border-gray-200 p-6 flex flex-col gap-4 relative z-10">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-bold text-brandDarkGreen flex items-center gap-2">
+                            <svg class="w-6 h-6 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            西区会員薬局検索
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">お探しの薬局を「エリア」または「名前・住所」から検索できます</p>
+                    </div>
+                    <button onclick="closeSearchModal()" class="p-2 -mt-2 -mr-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                
+                <!-- Keyword Input -->
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="フリーワード検索（薬局名・住所など）" 
+                           class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 shadow-inner focus:border-brandGreen focus:ring-2 focus:ring-brandGreen/20 outline-none transition-all text-lg"
+                           oninput="handleKeywordSearch(this.value)">
+                    <svg class="w-6 h-6 text-gray-400 absolute left-4 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+
+            <!-- 2. Main Content Area (Scrollable) -->
+            <div class="flex-grow overflow-y-auto bg-gray-50/50 p-6 relative">
+                
+                <!-- View A: Area Selection (Default) -->
+                <div id="view-area-selection" class="animate-fade-in-up">
+                    <h4 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 border-b border-gray-200 pb-2">
+                        エリアから探す
+                    </h4>
+                    <!-- Dynamic Area List injected here -->
+                    <div id="area-list-container" class="space-y-8"></div>
+                </div>
+
+                <!-- View B: Pharmacy List (Hidden by default) -->
+                <div id="view-pharmacy-list" class="hidden animate-fade-in-up">
+                    <div class="flex items-center justify-between mb-6">
+                        <button onclick="showAreaSelection()" class="flex items-center text-sm font-bold text-gray-500 hover:text-brandGreen transition-colors group">
+                            <svg class="w-4 h-4 mr-1 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            エリア選択に戻る
+                        </button>
+                        <span id="list-title" class="text-lg font-bold text-brandDarkGreen bg-brandGreen/10 px-3 py-1 rounded-full">
+                            <!-- Dynamic Title -->
+                        </span>
+                    </div>
+
+                    <div id="pharmacy-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Cards injected by JS -->
+                    </div>
+                    
+                    <div id="no-results" class="hidden flex flex-col items-center justify-center py-12 text-gray-400 opacity-50">
+                        <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p>条件に一致する薬局が見つかりませんでした</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+          ✨ Gemini API Feature: AI Chatbot UI (Mascot Ver.)
+    ========================================== -->
+    <div id="chatbot-container" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+        
+        <!-- Chat Window -->
+        <div id="chatbot-window" class="glass-card hidden w-[350px] md:w-[400px] h-[500px] bg-white flex flex-col mb-4 shadow-2xl border-2 border-white/80 overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-brandGreen to-brandDarkGreen p-4 text-white flex justify-between items-center relative overflow-hidden">
+                <div class="flex items-center gap-3 relative z-10">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/50 bg-white">
+                        <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-base">ゆるキャラAI相談</h4>
+                        <p class="text-[10px] opacity-90">お薬・健康・地域のことを聞いてね！</p>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="text-white/80 hover:text-white relative z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Chat Area -->
+            <div id="chat-messages" class="flex-grow overflow-y-auto p-4 bg-gray-50 scroll-smooth">
+                <!-- Initial Message -->
+                <div class="chat-message ai flex gap-3 items-start">
+                    <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-gray-200 bg-white">
+                        <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <p>こんにちは！福岡市西区薬剤師会の公式キャラクターです✨<br><br>💊 <strong>お薬のこと</strong><br>🏥 <strong>健康のこと</strong><br>🏠 <strong>地域の一般的なこと</strong><br><br>なんでも気軽に相談してね！</p>
+                        <p class="text-[10px] text-gray-400 mt-2 pt-2 border-t border-gray-100">※私はAIです。医学的な診断や具体的な投薬指示はできません。必ず専門の医師や薬剤師にご相談ください。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-3 bg-white border-t border-gray-100">
+                <form onsubmit="handleChatSubmit(event)" class="relative">
+                    <input type="text" id="chat-input" placeholder="例: 薬の飲み忘れについて..." 
+                           class="w-full pl-4 pr-12 py-3 rounded-full bg-gray-100 focus:bg-white border border-transparent focus:border-brandGreen focus:ring-2 focus:ring-brandGreen/20 outline-none transition-all text-sm">
+                    <button type="submit" id="chat-send-btn" class="absolute right-2 top-1.5 p-1.5 bg-brandGreen text-white rounded-full hover:bg-brandDarkGreen transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-4 h-4 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toggle Button (Mascot Icon) -->
+        <button onclick="toggleChat()" class="group relative flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+            <!-- Icon Image Container -->
+            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white relative z-10">
+                <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="西区薬剤師会ゆるキャラ" class="w-full h-full object-cover">
+            </div>
+            
+            <!-- Status Dot -->
+            <span class="absolute top-1 right-1 z-20 w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse"></span>
+            
+            <!-- Tooltip (吹き出し) -->
+            <div class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white text-brandDarkGreen px-4 py-3 rounded-2xl shadow-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap hidden md:block border border-brandGreen/10">
+                <p class="leading-tight">お薬・健康の<br>ご相談はこちら✨</p>
+                <div class="absolute top-1/2 -right-2 w-3 h-3 bg-white transform rotate-45 -translate-y-1/2 border-t border-r border-brandGreen/10"></div>
+            </div>
+        </button>
+    </div>
+
+    <!-- Scripts -->
     <script>
+        // =========================================================================
+        // ✨ Gemini API Configuration & Logic
+        // =========================================================================
+        
+        const apiKey = ""; 
+
+        // 1. Text-to-Speech (TTS) Function
+        async function readGreeting() {
+            const textToRead = document.getElementById('greeting-text').innerText;
+            const btn = document.getElementById('tts-btn');
+            const spinner = document.getElementById('tts-loading');
+            
+            btn.classList.add('pointer-events-none', 'opacity-70');
+            spinner.classList.remove('hidden');
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: textToRead }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } }
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0].content.parts[0].inlineData) {
+                    const audioContent = data.candidates[0].content.parts[0].inlineData.data;
+                    const wavBytes = pcmToWav(base64ToArrayBuffer(audioContent), 24000); 
+                    const wavBlob = new Blob([wavBytes], { type: 'audio/wav' });
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    const audio = new Audio(audioUrl);
+                    audio.play();
+                }
+
+            } catch (error) {
+                console.error("TTS Error:", error);
+                alert("音声読み上げの生成に失敗しました。");
+            } finally {
+                btn.classList.remove('pointer-events-none', 'opacity-70');
+                spinner.classList.add('hidden');
+            }
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) { bytes[i] = binaryString.charCodeAt(i); }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcmData, sampleRate = 24000) {
+            const numChannels = 1;
+            const bitsPerSample = 16;
+            const byteRate = sampleRate * numChannels * bitsPerSample / 8;
+            const blockAlign = numChannels * bitsPerSample / 8;
+            const dataSize = pcmData.byteLength;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            function writeString(view, offset, string) {
+                for (let i = 0; i < string.length; i++) { view.setUint8(offset + i, string.charCodeAt(i)); }
+            }
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); 
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, bitsPerSample, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            const pcmBytes = new Uint8Array(pcmData);
+            const wavBytes = new Uint8Array(buffer);
+            wavBytes.set(pcmBytes, 44);
+
+            return buffer;
+        }
+
+
+        // 2. Chatbot Logic
+        function toggleChat() {
+            const window = document.getElementById('chatbot-window');
+            window.classList.toggle('hidden');
+        }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            addChatMessage(message, 'user');
+            input.value = '';
+            const loadingId = addLoadingIndicator();
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: message }] }],
+                        systemInstruction: {
+                            parts: [{ text: "あなたは福岡市西区薬剤師会の公式マスコットキャラクター（AI）です。ユーザーからの「お薬」「健康」「地域の一般的なこと」に関する質問に、親切かつフレンドリーな日本語で答えてください。語尾に「〜だよ」「〜だね」などを使い、柔らかい口調を心がけてください。ただし、あなたは医師ではないため、確定的な診断や具体的な投薬指示は絶対に避けてください。回答の最後には必ず『※具体的な症状については、必ず医師または薬剤師にご相談ください』という趣旨の免責事項を添えてください。絵文字を適度に使用して楽しく会話してください。" }]
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "すみません、うまく答えられませんでした。もう一度お試しください。";
+                removeLoadingIndicator(loadingId);
+                addChatMessage(aiText, 'ai');
+
+            } catch (error) {
+                console.error("Chat Error:", error);
+                removeLoadingIndicator(loadingId);
+                addChatMessage("申し訳ありません。現在AIシステムに接続できません。", 'ai');
+            }
+        }
+
+        function addChatMessage(text, type) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            
+            if (type === 'ai') {
+                div.className = `chat-message ai flex gap-3 items-start`;
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-gray-200 bg-white">
+                        <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
+                    </div>
+                    <div>${text.replace(/\n/g, '<br>')}</div>
+                `;
+            } else {
+                div.className = `chat-message user`;
+                div.innerHTML = text.replace(/\n/g, '<br>');
+            }
+            
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addLoadingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `chat-message ai typing-indicator flex gap-3 items-center`; // Modified for alignment
+            div.id = `loading-${Date.now()}`;
+            
+            // Add mascot icon to loading state too for consistency
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-gray-200 bg-white">
+                    <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex gap-1">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            // Override styles for clean look
+            div.style.background = 'transparent';
+            div.style.boxShadow = 'none';
+            div.style.border = 'none';
+            div.style.padding = '0';
+
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div.id;
+        }
+
+        function removeLoadingIndicator(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+
+        // =========================================================================
+        // Three.js and Animations (Existing)
+        // =========================================================================
         const canvasContainer = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        
-        // カメラ設定
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 100;
-
-        // レンダラー設定
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         canvasContainer.appendChild(renderer.domElement);
-
-        // パーティクル設定
         const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 80; // パーティクルの数
-        
+        const particlesCount = 80; 
         const posArray = new Float32Array(particlesCount * 3);
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.8,
-            color: 0x4CAF50, // ブランドカラー
-            transparent: true,
-            opacity: 0.8,
-        });
-
-        // パーティクルをランダム配置（全画面に広がるように）
-        for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 250; 
-        }
-
+        const particlesMaterial = new THREE.PointsMaterial({ size: 0.8, color: 0x4CAF50, transparent: true, opacity: 0.8, });
+        for(let i = 0; i < particlesCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 250; }
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
-
-        // 線を描画するためのマテリアル
-        const linesMaterial = new THREE.LineBasicMaterial({
-            color: 0x4CAF50,
-            transparent: true,
-            opacity: 0.15
-        });
-
-        // マウスインタラクション
+        const linesMaterial = new THREE.LineBasicMaterial({ color: 0x4CAF50, transparent: true, opacity: 0.15 });
         let mouseX = 0;
         let mouseY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = event.clientX - window.innerWidth / 2;
-            mouseY = event.clientY - window.innerHeight / 2;
-        });
-
-        // アニメーションループ
+        document.addEventListener('mousemove', (event) => { mouseX = event.clientX - window.innerWidth / 2; mouseY = event.clientY - window.innerHeight / 2; });
         function animate() {
             requestAnimationFrame(animate);
-
             const positions = particlesMesh.geometry.attributes.position.array;
-
-            // パーティクルをゆっくり動かす
             for (let i = 0; i < particlesCount; i++) {
                 const i3 = i * 3;
-                positions[i3 + 1] += Math.sin(Date.now() * 0.001 + positions[i3]) * 0.05; // Y軸の揺らぎ
-                positions[i3] += Math.cos(Date.now() * 0.001 + positions[i3 + 1]) * 0.02; // X軸の揺らぎ
+                positions[i3 + 1] += Math.sin(Date.now() * 0.001 + positions[i3]) * 0.05; 
+                positions[i3] += Math.cos(Date.now() * 0.001 + positions[i3 + 1]) * 0.02; 
             }
             particlesMesh.geometry.attributes.position.needsUpdate = true;
-
-            // 距離が近いパーティクル同士を線で結ぶ（ネットワーク効果）
             const lineGeometry = new THREE.BufferGeometry();
             const linePositions = [];
-
-            // マウス位置の影響
             particlesMesh.rotation.y = mouseX * 0.0001;
             particlesMesh.rotation.x = mouseY * 0.0001;
-
             for (let i = 0; i < particlesCount; i++) {
                 for (let j = i + 1; j < particlesCount; j++) {
                     const dx = positions[i * 3] - positions[j * 3];
                     const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
                     const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
                     const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
-
-                    if (dist < 35) { // 距離の閾値
+                    if (dist < 35) { 
                         linePositions.push(
                             positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
                             positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
@@ -550,73 +882,294 @@
                     }
                 }
             }
-
             lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-            
-            // 古い線を削除して新しい線を追加
             const oldLines = scene.getObjectByName('networkLines');
             if (oldLines) scene.remove(oldLines);
-
             const linesMesh = new THREE.LineSegments(lineGeometry, linesMaterial);
             linesMesh.name = 'networkLines';
             linesMesh.rotation.y = particlesMesh.rotation.y;
             linesMesh.rotation.x = particlesMesh.rotation.x;
             scene.add(linesMesh);
-
             renderer.render(scene, camera);
         }
-
         animate();
-
-        // リサイズ対応
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // --------------------------------------------------------
-        // Vanilla Tilt Logic (カードの3D傾き効果) - 軽量実装
-        // --------------------------------------------------------
+        window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
         document.querySelectorAll('[data-tilt]').forEach((el) => {
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const centerX = rect.width / 2; const centerY = rect.height / 2;
                 const rotateX = ((y - centerY) / centerY) * -3; 
                 const rotateY = ((x - centerX) / centerX) * 3;
-
                 el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
             });
-
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            });
+            el.addEventListener('mouseleave', () => { el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'; });
         });
-
-        // --------------------------------------------------------
-        // Scroll Reveal Logic (スクロール時のフェードイン)
-        // --------------------------------------------------------
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            const elementVisible = 100;
-
+            const windowHeight = window.innerHeight; const elementVisible = 100;
             reveals.forEach((reveal) => {
                 const elementTop = reveal.getBoundingClientRect().top;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveal.classList.add('active');
-                }
+                if (elementTop < windowHeight - elementVisible) { reveal.classList.add('active'); }
             });
         };
         window.addEventListener('scroll', revealOnScroll);
-        // 初期実行
         revealOnScroll();
 
+        // =========================================================================
+        // 薬局検索ロジック (Renewed UI)
+        // =========================================================================
+        
+        let pharmacies = [];
+
+        // 1. JSONデータのロード
+        function loadPharmacyData() {
+            pharmacies = typeof pharmaciesData !== 'undefined' ? pharmaciesData : [];
+            renderAreaSelectionScreen();
+        }
+
+        // 2. エリア一覧画面の描画 (Grouped by Division)
+        function renderAreaSelectionScreen() {
+            const container = document.getElementById('area-list-container');
+            container.innerHTML = '';
+
+            // 部会ごとにエリアをグループ化
+            const divisions = {};
+            pharmacies.forEach(p => {
+                if (!divisions[p.division]) {
+                    divisions[p.division] = new Set();
+                }
+                if (p.searchArea) {
+                    divisions[p.division].add(p.searchArea);
+                }
+            });
+
+            // 部会ごとにレンダリング
+            Object.keys(divisions).sort().forEach(division => {
+                if (divisions[division].size === 0) return;
+
+                const section = document.createElement('div');
+                section.className = 'mb-6';
+                
+                const title = document.createElement('h5');
+                title.className = 'font-bold text-lg text-brandDarkGreen mb-3 flex items-center';
+                title.innerHTML = `<span class="w-2 h-2 bg-brandYellow rounded-full mr-2"></span>${division}部会`;
+                section.appendChild(title);
+
+                const areaGrid = document.createElement('div');
+                areaGrid.className = 'flex flex-wrap gap-2';
+                
+                // エリアボタン生成
+                const sortedAreas = Array.from(divisions[division]).sort();
+                sortedAreas.forEach(area => {
+                    const btn = document.createElement('button');
+                    btn.className = 'px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-brandGreen hover:text-brandGreen text-gray-700 font-bold text-sm transition-all';
+                    btn.textContent = area;
+                    btn.onclick = () => selectArea(area);
+                    areaGrid.appendChild(btn);
+                });
+
+                section.appendChild(areaGrid);
+                container.appendChild(section);
+            });
+        }
+
+        // 3. エリア選択時のアクション
+        function selectArea(area) {
+            // View切り替え
+            document.getElementById('view-area-selection').classList.add('hidden');
+            document.getElementById('view-pharmacy-list').classList.remove('hidden');
+            
+            // タイトル更新
+            document.getElementById('list-title').textContent = `${area}エリアの薬局`;
+
+            // フィルタリング実行
+            const filtered = pharmacies.filter(p => p.searchArea === area);
+            renderPharmacyList(filtered);
+        }
+
+        // 4. キーワード検索時のアクション
+        function handleKeywordSearch(keyword) {
+            keyword = keyword.trim().toLowerCase();
+            
+            if (keyword === '') {
+                // 入力が空ならエリア選択に戻る
+                showAreaSelection();
+                return;
+            }
+
+            // View切り替え（強制的にリスト表示へ）
+            document.getElementById('view-area-selection').classList.add('hidden');
+            document.getElementById('view-pharmacy-list').classList.remove('hidden');
+            document.getElementById('list-title').textContent = `「${keyword}」の検索結果`;
+
+            const filtered = pharmacies.filter(p => {
+                const searchStr = `${p.name} ${p.address} ${p.searchArea} ${p.member}`.toLowerCase();
+                return searchStr.includes(keyword);
+            });
+
+            renderPharmacyList(filtered);
+        }
+
+        // 5. 薬局リストの描画
+        function renderPharmacyList(list) {
+            const container = document.getElementById('pharmacy-list');
+            const noResults = document.getElementById('no-results');
+            
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+
+            list.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all flex flex-col cursor-pointer group';
+                // カード全体をクリックしたらGoogleマップへ
+                card.onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address + ' ' + p.name)}`, '_blank');
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">${p.division}</span>
+                        ${p.searchArea ? `<span class="bg-brandGreen/10 text-brandDarkGreen text-[10px] font-bold px-2 py-1 rounded ml-2">${p.searchArea}</span>` : ''}
+                    </div>
+                    <h4 class="font-bold text-lg text-brandDarkGreen mb-1 group-hover:text-brandGreen transition-colors flex items-center justify-between">
+                        ${p.name}
+                        <svg class="w-5 h-5 text-gray-300 group-hover:text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </h4>
+                    <p class="text-xs text-gray-500 mb-3"><span class="font-bold">管理薬剤師:</span> ${p.member}</p>
+                    
+                    <div class="mt-auto space-y-2 text-sm text-gray-600">
+                        <div class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>${p.address}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <span class="font-en">${p.tel}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 6. エリア選択画面に戻る
+        function showAreaSelection() {
+            document.getElementById('view-area-selection').classList.remove('hidden');
+            document.getElementById('view-pharmacy-list').classList.add('hidden');
+            document.getElementById('search-input').value = ''; // 検索窓クリア
+        }
+
+        // Modal Controls
+        function openSearchModal() {
+            loadPharmacyData(); 
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            // Reset to default state
+            showAreaSelection();
+        }
     </script>
+
+    <!-- ==========================================
+          JSON Data Storage
+    ========================================== -->
+    <script>
+        const pharmaciesData = [
+          { "division": "壱岐", "name": "(株)アインファーマシーズ アイン薬局 生の松原店", "member": "徳富　万由子", "tel": "881-0530", "fax": "881-0068", "zip": "〒819-0055", "address": "西区生の松原3-25-18", "searchArea": "生の松原" },
+          { "division": "壱岐", "name": "(株)アガペ上山門薬局", "member": "秋山　武義", "tel": "892-3877", "fax": "892-3878", "zip": "〒819-0054", "address": "西区上山門1-14-1", "searchArea": "上山門" },
+          { "division": "壱岐", "name": "(有)イッセイ イッセイ調剤薬局", "member": "仲上  一成", "tel": "811-6380", "fax": "811-6380", "zip": "〒819-0031", "address": "西区橋本2-17-28", "searchArea": "橋本" },
+          { "division": "壱岐", "name": "(株)大賀薬局 石丸店", "member": "大庭　健司", "tel": "882-3051", "fax": "882-3987", "zip": "〒819-0025", "address": "西区石丸3-1-42", "searchArea": "石丸" },
+          { "division": "壱岐", "name": "(株)大賀薬局 拾六町店", "member": "市山　瑛理", "tel": "882-8117", "fax": "882-8276", "zip": "〒819-0045", "address": "西区拾六町団地1-19", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)コ－シン薬局", "member": "山縣　光喜", "tel": "884-1837", "fax": "400-4896", "zip": "〒819-0041", "address": "西区拾六町1-19-1", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(株)ココカラファインヘルスケア ココカラファイン薬局 白十字病院店", "member": "太田　航", "tel": "407-2272", "fax": "407-2273", "zip": "〒819-0025", "address": "西区石丸4-3-1駐車場棟1階", "searchArea": "石丸" },
+          { "division": "壱岐", "name": "(株)なの花九州 さくら薬局 福リハ店", "member": "住吉　万里子", "tel": "834-6580", "fax": "819-8551", "zip": "〒819-8551", "address": "西区野方7-770", "searchArea": "野方" },
+          { "division": "壱岐", "name": "(株)アールファーマ セイブ薬局", "member": "重松　明子", "tel": "812-0122", "fax": "812-0123", "zip": "〒819-0037", "address": "西区飯盛520-2", "searchArea": "飯盛" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 石丸店", "member": "石井　晶久", "tel": "885-1631", "fax": "885-1632", "zip": "〒819-0025", "address": "西区石丸3-7-30", "searchArea": "石丸" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 下山門店", "member": "清水　聖子", "tel": "892-1511", "fax": "892-1519", "zip": "〒819-0051", "address": "西区下山門団地40-1", "searchArea": "下山門団地" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 戸切店", "member": "百枝　尚", "tel": "892-5041", "fax": "892-5042", "zip": "〒819-0032", "address": "西区戸切2-13-10", "searchArea": "戸切" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 野方店", "member": "清水　太一", "tel": "812-1601", "fax": "812-1602", "zip": "〒819-0043", "address": "西区野方7-759-4", "searchArea": "野方" },
+          { "division": "壱岐", "name": "総合メディカル(株) そうごう薬局 野方東店", "member": "福田　沙耶香", "tel": "812-5231", "fax": "812-5232", "zip": "〒819-0043", "address": "西区野方6-36-26", "searchArea": "野方" },
+          { "division": "壱岐", "name": "大晃調剤薬局(有)", "member": "須賀原　輝和", "tel": "811-0928", "fax": "811-0928", "zip": "〒819-0042", "address": "西区壱岐団地136-7", "searchArea": "壱岐団地" },
+          { "division": "壱岐", "name": "(株)タカラ薬局 タカラ薬局 西の丘", "member": "水江　育子", "tel": "891-1298", "fax": "891-1298", "zip": "〒819-0041", "address": "西区拾六町3-8-20", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)テクノメディカ ＴＭ調剤薬局 野方６丁目店", "member": "溝口　展子", "tel": "894-8688", "fax": "894-8687", "zip": "〒819-0043", "address": "西区野方6-26-8", "searchArea": "野方" },
+          { "division": "壱岐", "name": "(有)イッセイ ナカガミ薬局 センタービル店", "member": "仲上　恵司", "tel": "811-6530", "fax": "812-1136", "zip": "〒819-0042", "address": "西区壱岐団地135-11", "searchArea": "壱岐団地" },
+          { "division": "壱岐", "name": "(株)ニック ニック調剤薬局 生の松原店", "member": "小宮　史子", "tel": "892-1866", "fax": "892-1867", "zip": "〒819-0055", "address": "西区生の松原1-33-1-2F", "searchArea": "生の松原" },
+          { "division": "壱岐", "name": "(株)ニック ニック調剤薬局 西の丘店", "member": "荻野　亜紀", "tel": "895-1102", "fax": "895-1103", "zip": "〒819-0046", "address": "西区西の丘2-1-1", "searchArea": "西の丘" },
+          { "division": "壱岐", "name": "(有)野方セントラル薬局", "member": "佐藤　伸", "tel": "812-1528", "fax": "812-1529", "zip": "〒819-0043", "address": "西区野方1-16-19", "searchArea": "野方" },
+          { "division": "壱岐", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 野方店", "member": "小田原　遥", "tel": "407-5777", "fax": "407-5779", "zip": "〒819-0032", "address": "西区戸切2-18-1", "searchArea": "戸切" },
+          { "division": "壱岐", "name": "(有)ハーブ調剤薬局", "member": "宇戸　江利子", "tel": "881-8243", "fax": "891-0607", "zip": "〒819-0041", "address": "西区拾六町5-15-5", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(株)ワン・ハート パンプキン薬局", "member": "大前　光徳", "tel": "407-3757", "fax": "407-3758", "zip": "〒819-0041", "address": "西区拾六町5-1-30", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)福神 福神調剤薬局 拾六町店", "member": "伊佐　珠", "tel": "885-5148", "fax": "885-5188", "zip": "〒819-0041", "address": "西区拾六町5-17-23", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(株)峰松ハカタ薬局 ミネマツ薬局 上山門店", "member": "峯松  善彦", "tel": "883-0113", "fax": "883-0114", "zip": "〒819-0054", "address": "西区上山門1-22-2", "searchArea": "上山門" },
+          { "division": "壱岐", "name": "(株)薬局白十字 薬局白十字 拾六町店", "member": "穴井　明子", "tel": "986-8912", "fax": "982-0064", "zip": "〒819-0041", "address": "西区拾六町1-3-16", "searchArea": "拾六町" },
+          { "division": "壱岐", "name": "(有)吉田薬局 エクセル店", "member": "吉田　武夫", "tel": "882-3365", "fax": "882-3365", "zip": "〒819-0054", "address": "西区上山門1-7-1", "searchArea": "上山門" },
+          { "division": "壱岐", "name": "(有)吉田薬局 下山門店", "member": "清田　美智子", "tel": "891-5220", "fax": "891-5220", "zip": "〒819-0054", "address": "西区上山門1-3-33", "searchArea": "上山門" },
+          { "division": "姪浜", "name": "(有)あかね あかね薬局 すずらん", "member": "浦　景子", "tel": "895-5861", "fax": "895-5862", "zip": "〒819-0006", "address": "西区姪浜駅南2-31-3", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(有)あかね あかね薬局 わかば", "member": "浦　寛明", "tel": "895-2674", "fax": "895-2675", "zip": "〒819-0006", "address": "西区姪浜駅南3-15-20", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(株)アガペ姪浜薬局", "member": "村里　潤子", "tel": "882-0056", "fax": "882-0054", "zip": "〒819-0002", "address": "西区姪の浜5-9-1福岡市交通局姪浜合同事務所1F", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(有)ミドリ薬局 愛宕浜梅薬局", "member": "中間  道子", "tel": "884-3911", "fax": "882-2451", "zip": "〒819-0013", "address": "西区愛宕浜1-3-1", "searchArea": "愛宕浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 愛宕店", "member": "増田　千穂", "tel": "892-3800", "fax": "892-3805", "zip": "〒819-0002", "address": "西区姪の浜2-2-53", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 小戸店", "member": "野﨑　章吾", "tel": "884-0851", "fax": "884-0796", "zip": "〒819-0001", "address": "西区小戸1-16-27", "searchArea": "小戸" },
+          { "division": "姪浜", "name": "(株)大賀薬局 姪の浜４丁目店", "member": "松尾　めぐみ", "tel": "892-3456", "fax": "892-3446", "zip": "〒819-0002", "address": "西区姪の浜4-14-28", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 姪浜駅前店", "member": "瀧山　さおり", "tel": "884-3034", "fax": "884-3038", "zip": "〒819-0005", "address": "西区内浜1-1-5", "searchArea": "内浜" },
+          { "division": "姪浜", "name": "(株)大賀薬局 姪の浜店", "member": "村上　亜沙美", "tel": "892-4012", "fax": "892-4013", "zip": "〒819-0002", "address": "西区姪の浜4-14-21", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)福岡保健企画 かもめ薬局", "member": "中嶋　秀樹", "tel": "895-1121", "fax": "895-1131", "zip": "〒819-0022", "address": "西区福重5-6-1", "searchArea": "福重" },
+          { "division": "姪浜", "name": "(有)三気堂 クローバー薬局", "member": "塩田　賢功", "tel": "883-9397", "fax": "883-9398", "zip": "〒819-0002", "address": "西区姪の浜4-17-5", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)ストレチア セイコー薬局 福重店", "member": "河野　雅子", "tel": "894-3460", "fax": "894-3461", "zip": "〒819-0022", "address": "西区福重5-19-12", "searchArea": "福重" },
+          { "division": "姪浜", "name": "総合メディカル(株) そうごう薬局 石丸東店", "member": "溝口　典彦", "tel": "883-1861", "fax": "883-1862", "zip": "〒819-0025", "address": "西区石丸2-40-27", "searchArea": "石丸" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 豊浜", "member": "平田　康喜", "tel": "892-3737", "fax": "892-3737", "zip": "〒819-0014", "address": "西区豊浜2-1-1-1F", "searchArea": "豊浜" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 橋本", "member": "池野　剛史", "tel": "834-5555", "fax": "834-5555", "zip": "〒819-0031", "address": "西区橋本2-33-33", "searchArea": "橋本" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 福重", "member": "田村　公次郎", "tel": "881-3931", "fax": "881-3931", "zip": "〒819-0022", "address": "西区福重4-7-4", "searchArea": "福重" },
+          { "division": "姪浜", "name": "(株)タカラ薬局 タカラ薬局 姪浜駅前", "member": "江口　正弘", "tel": "883-1021", "fax": "883-1021", "zip": "〒819-0006", "address": "西区姪浜駅南1-4-18", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(有)タケオ薬局", "member": "竹尾  眞一", "tel": "881-0920", "fax": "881-0920", "zip": "〒819-0002", "address": "西区姪の浜3-4-2", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)トモエ薬局 トモエ薬局 姪浜駅南店", "member": "赤塚　香奈", "tel": "407-6705", "fax": "407-6715", "zip": "〒819-0006", "address": "西区姪浜駅南2-30-5", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 マリナ通り店", "member": "清水　栞", "tel": "882-1255", "fax": "882-1256", "zip": "〒819-0015", "address": "西区愛宕4-13-16", "searchArea": "愛宕" },
+          { "division": "姪浜", "name": "(有)ヘルス・メディック佐賀 ヒマワリ薬局", "member": "磯野　寿光", "tel": "892-3014", "fax": "892-3017", "zip": "〒819-0006", "address": "西区姪浜駅南2-19-22", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "(有)フクオカ薬局", "member": "田中　克宣", "tel": "883-1795", "fax": "883-1795", "zip": "〒819-0002", "address": "西区姪の浜4-9-18", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)福重調剤薬局", "member": "木下　由貴子", "tel": "894-1258", "fax": "894-1258", "zip": "〒819-0022", "address": "西区福重3-12-9", "searchArea": "福重" },
+          { "division": "姪浜", "name": "(株)福花調剤薬局", "member": "向井　幸子", "tel": "892-3628", "fax": "892-3637", "zip": "〒819-0052", "address": "西区下山門1-13-12", "searchArea": "下山門" },
+          { "division": "姪浜", "name": "(有)福岡医進 マリナ薬局", "member": "天尾　阿季", "tel": "883-8877", "fax": "884-0550", "zip": "〒819-0002", "address": "西区姪の浜4-18-5", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "(株)峰松ハカタ薬局 ミネマツ薬局 姪浜南店", "member": "峯松　裕子", "tel": "885-1721", "fax": "885-1738", "zip": "〒819-0006", "address": "西区姪浜駅南2-19-18", "searchArea": "姪浜駅南" },
+          { "division": "姪浜", "name": "姪浜薬局", "member": "川原  裕伸", "tel": "891-7823", "fax": "891-7823", "zip": "〒819-0002", "address": "西区姪の浜4-15-30", "searchArea": "姪の浜" },
+          { "division": "姪浜", "name": "山久(有) ヤマサキ薬局", "member": "矢野　由美", "tel": "885-3578", "fax": "406-0140", "zip": "〒819-0006", "address": "西区姪浜駅南3-17-3", "searchArea": "姪浜駅南" },
+          { "division": "伊都", "name": "(有)ケイエムファーマ アイビー薬局", "member": "江上　恭介", "tel": "805-5777", "fax": "805-5780", "zip": "〒819-0166", "address": "西区横浜1-9-34", "searchArea": "横浜" },
+          { "division": "伊都", "name": "(株)アガペ横浜薬局", "member": "濵崎　亜希子", "tel": "805-8055", "fax": "805-8056", "zip": "〒819-0380", "address": "西区田尻東3-2570-13", "searchArea": "田尻東" },
+          { "division": "伊都", "name": "イオン九州(株) イオン薬局 福岡伊都店", "member": "松本　賢治", "tel": "805-8706", "fax": "805-8707", "zip": "〒819-0379", "address": "西区北原1-2-1", "searchArea": "北原" },
+          { "division": "伊都", "name": "(株)エンゼル薬局", "member": "矢野　徳宏", "tel": "807-1850", "fax": "807-1850", "zip": "〒819-0167", "address": "西区今宿1-1-10", "searchArea": "今宿" },
+          { "division": "伊都", "name": "(株)大賀薬局 学研都市店", "member": "杉野　由子", "tel": "805-1200", "fax": "805-1208", "zip": "〒819-0367", "address": "西区西都1-3-10", "searchArea": "西都" },
+          { "division": "伊都", "name": "(株)平栄 くれよん薬局 今津", "member": "中山　愛理", "tel": "400-2231", "fax": "400-2232", "zip": "〒819-0165", "address": "西区今津332-5", "searchArea": "今津" },
+          { "division": "伊都", "name": "(株)平栄 くれよん薬局 小田", "member": "石田　千穂子", "tel": "805-2377", "fax": "805-2380", "zip": "〒819-0203", "address": "西区大字小田42-5", "searchArea": "小田" },
+          { "division": "伊都", "name": "(株)平栄 くれよん薬局 元岡", "member": "稲永　幸紀", "tel": "806-1557", "fax": "806-9211", "zip": "〒819-0370", "address": "西区丸川1-1539-1", "searchArea": "丸川" },
+          { "division": "伊都", "name": "(株)ミズ 西都２丁目薬局", "member": "稲田　健一", "tel": "407-0050", "fax": "407-0051", "zip": "〒819-0367", "address": "西区西都2-4-8", "searchArea": "西都" },
+          { "division": "伊都", "name": "(有)ユニゾン さいと薬局", "member": "清竹　理子", "tel": "407-1915", "fax": "407-1973", "zip": "〒819-0378", "address": "西区徳永北18-4", "searchArea": "徳永北" },
+          { "division": "伊都", "name": "(株)なの花九州 さくら薬局 伊都店", "member": "廣吉　一宇", "tel": "707-6305", "fax": "707-6568", "zip": "〒819-0379", "address": "西区北原2-8-20", "searchArea": "北原" },
+          { "division": "伊都", "name": "(株)ライフアート さんくす薬局 今宿東店", "member": "旭　佳奈美", "tel": "407-8813", "fax": "407-8823", "zip": "〒819-0161", "address": "西区今宿東2-23-14", "searchArea": "今宿東" },
+          { "division": "伊都", "name": "(有)西南調剤薬局 周船寺店", "member": "木下　大輔", "tel": "807-4402", "fax": "807-4402", "zip": "〒819-0373", "address": "西区周船寺2-12-42", "searchArea": "周船寺" },
+          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 福岡今宿店", "member": "吉本　雅大", "tel": "400-0711", "fax": "400-0712", "zip": "〒819-0167", "address": "西区今宿3-4-37今宿ﾒﾃﾞｨｶﾙﾋﾞﾙ1F", "searchArea": "今宿" },
+          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 今宿駅前店", "member": "三重野　治子", "tel": "805-5021", "fax": "805-5022", "zip": "〒819-0168", "address": "西区今宿駅前1-2-32", "searchArea": "今宿駅前" },
+          { "division": "伊都", "name": "総合メディカル(株) そうごう薬局 周船寺店", "member": "土田  雄司", "tel": "802-0281", "fax": "802-0282", "zip": "〒819-0387", "address": "西区富士見2-14-5", "searchArea": "富士見" },
+          { "division": "伊都", "name": "(株)タカラ薬局 タカラ薬局 伊都", "member": "西村　直子", "tel": "805-7866", "fax": "805-7866", "zip": "〒819-0367", "address": "西区西都1-7-37", "searchArea": "西都" },
+          { "division": "伊都", "name": "(株)タカラ薬局 タカラ薬局 伊都東", "member": "出利葉　亮太", "tel": "405-0959", "fax": "405-0959", "zip": "〒819-0367", "address": "西区西都1-4-8", "searchArea": "西都" },
+          { "division": "伊都", "name": "(株)ツルハグループドラッグ＆ファーマシー西日本 調剤薬局ツルハドラッグ 今宿店", "member": "佐々木　英哲", "tel": "805-1250", "fax": "805-1260", "zip": "〒819-0167", "address": "西区今宿3-40-36", "searchArea": "今宿" },
+          { "division": "伊都", "name": "(株)ソフィア 津田薬局", "member": "津田  和敏", "tel": "806-2372", "fax": "806-6752", "zip": "〒819-0166", "address": "西区横浜1-50-16", "searchArea": "横浜" },
+          { "division": "伊都", "name": "(有)インプローブ つよいこ薬局", "member": "山村  伸也", "tel": "807-6588", "fax": "807-6588", "zip": "〒819-0167", "address": "西区今宿3-40-27-102", "searchArea": "今宿" },
+          { "division": "伊都", "name": "Ｊ－Ｆｒｏｎｔ(株) 野間薬局 今宿店", "member": "吉村　晃毅", "tel": "400-1225", "fax": "400-1226", "zip": "〒819-0167", "address": "西区今宿3-6-3", "searchArea": "今宿" },
+          { "division": "伊都", "name": "(株)フクジン 福神調剤薬局 周船寺店", "member": "藤井　岳史", "tel": "805-6055", "fax": "805-6077", "zip": "〒819-0373", "address": "西区周船寺1-5-25ｻﾝﾘｯﾄﾋﾞﾙ1F", "searchArea": "周船寺" },
+          { "division": "伊都", "name": "(株)健康一家 まさおか薬局 今宿店", "member": "正岡　玄光", "tel": "805-7770", "fax": "805-7770", "zip": "〒819-0169", "address": "西区今宿西1-30-25", "searchArea": "今宿西" },
+          { "division": "伊都", "name": "(有)有志堂 もくば薬局 周船寺駅前店", "member": "早川　武志", "tel": "807-8066", "fax": "807-8066", "zip": "〒819-0373", "address": "西区周船寺1-1-32", "searchArea": "周船寺" },
+          { "division": "伊都", "name": "(株)ヤクシンＰＧ ヤクシン薬局 伊都店", "member": "鍋島　博美", "tel": "805-6666", "fax": "805-6667", "zip": "〒819-0367", "address": "西区西都1-1-46", "searchArea": "西都" },
+          { "division": "伊都", "name": "(有)コムズ ライフ薬局", "member": "小森　健治", "tel": "805-8755", "fax": "805-8756", "zip": "〒819-0168", "address": "西区今宿駅前1-7-5", "searchArea": "今宿駅前" },
+          { "division": "伊都", "name": "(有)ＦＲＰ リライ薬局 学研都市店", "member": "柳原　真理子", "tel": "805-6210", "fax": "805-6211", "zip": "〒819-0379", "address": "西区北原1-13-3FAMS学研都市1F", "searchArea": "北原" }
+        ];
+    </script>
+
 </body>
 </html>
