@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- ==========================================
+          ファビコン設定 (PC・スマホ対応)
+    ========================================== -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/FzCysGFc/favicon.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/FzCysGFc/favicon.png">
+
+    <!-- ==========================================
           SEO対策 1: タイトルタグの最適化
     ========================================== -->
     <title>福岡市西区薬剤師会 | 地域医療への貢献と活動</title>
@@ -378,7 +384,7 @@
                         <tr><td>監事</td><td>山村 伸也</td></tr>
                         <tr><td>理事 (薬局)</td><td>磯野 寿光</td></tr>
                         <tr><td>理事 (広報)</td><td>石井 晶久</td></tr>
-                        <tr><td>理事 (学術研修)</td><td>福田 沙耶香 / 冨田 京子</td></tr>
+                        <tr><td>理事 (学術研修)</td><td>福田 沙耶香 / <span class="text-xs text-gray-500">副:</span> 冨田 京子</td></tr>
                         <tr><td>理事 (学校薬剤師)</td><td>中島 亜希</td></tr>
                         <tr><td>理事 (組織)</td><td>清水 聖子</td></tr>
                         <tr><td>理事 (在宅・介護)</td><td>坂本 直大</td></tr>
@@ -441,10 +447,11 @@
                             </div>
                         </div>
                         <div class="mt-auto pt-4 border-t border-gray-200/50">
-                            <button onclick="alert('実際のPDFリンクへ飛びます')" class="flex items-center justify-center w-full py-2 bg-brandGreen/10 text-brandDarkGreen font-bold rounded-lg hover:bg-brandGreen hover:text-white transition-all text-sm group-hover:shadow-md">
+                            <!-- 変更箇所：hrefを直接PDF名に修正 -->
+                            <a href="lecture-20251115.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full py-2 bg-brandGreen/10 text-brandDarkGreen font-bold rounded-lg hover:bg-brandGreen hover:text-white transition-all text-sm group-hover:shadow-md">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                 講演資料PDFを見る
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </article>
@@ -594,7 +601,7 @@
                         <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <h4 class="font-bold text-base">ゆるキャラAI相談</h4>
+                        <h4 class="font-bold text-base">ニシヤクくん AI相談</h4>
                         <p class="text-[10px] opacity-90">お薬・健康・地域のことを聞いてね！</p>
                     </div>
                 </div>
@@ -611,8 +618,8 @@
                         <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="Mascot" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <p>こんにちは！福岡市西区薬剤師会の公式キャラクターです✨<br><br>💊 <strong>お薬のこと</strong><br>🏥 <strong>健康のこと</strong><br>🏠 <strong>地域の一般的なこと</strong><br><br>なんでも気軽に相談してね！</p>
-                        <p class="text-[10px] text-gray-400 mt-2 pt-2 border-t border-gray-100">※私はAIです。医学的な診断や具体的な投薬指示はできません。必ず専門の医師や薬剤師にご相談ください。</p>
+                        <p>こんにちは！福岡市西区薬剤師会の公式キャラクター「ニシヤクくん」だよ✨<br><br>💊 <strong>お薬のこと</strong><br>🏥 <strong>健康のこと</strong><br>🏠 <strong>地域の一般的なこと</strong><br><br>なんでも気軽に相談してね！</p>
+                        <p class="text-[10px] text-gray-400 mt-2 pt-2 border-t border-gray-100">※ボクはAIだよ。医学的な診断や具体的な投薬指示はできないから、必ず専門の医師や薬剤師に相談してね。</p>
                     </div>
                 </div>
             </div>
@@ -633,7 +640,7 @@
         <button onclick="toggleChat()" class="group relative flex items-center justify-center transition-all hover:scale-105 active:scale-95">
             <!-- Icon Image Container -->
             <div class="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white relative z-10">
-                <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="西区薬剤師会ゆるキャラ" class="w-full h-full object-cover">
+                <img src="https://i.postimg.cc/jd4WdBmp/Generated-Image-December-10-2025-7-43PM.jpg" alt="ニシヤクくん" class="w-full h-full object-cover">
             </div>
             
             <!-- Status Dot -->
@@ -641,7 +648,7 @@
             
             <!-- Tooltip (吹き出し) -->
             <div class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white text-brandDarkGreen px-4 py-3 rounded-2xl shadow-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap hidden md:block border border-brandGreen/10">
-                <p class="leading-tight">お薬・健康の<br>ご相談はこちら✨</p>
+                <p class="leading-tight">ニシヤクくんに<br>相談する？✨</p>
                 <div class="absolute top-1/2 -right-2 w-3 h-3 bg-white transform rotate-45 -translate-y-1/2 border-t border-r border-brandGreen/10"></div>
             </div>
         </button>
@@ -762,7 +769,7 @@
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: message }] }],
                         systemInstruction: {
-                            parts: [{ text: "あなたは福岡市西区薬剤師会の公式マスコットキャラクター（AI）です。ユーザーからの「お薬」「健康」「地域の一般的なこと」に関する質問に、親切かつフレンドリーな日本語で答えてください。語尾に「〜だよ」「〜だね」などを使い、柔らかい口調を心がけてください。ただし、あなたは医師ではないため、確定的な診断や具体的な投薬指示は絶対に避けてください。回答の最後には必ず『※具体的な症状については、必ず医師または薬剤師にご相談ください』という趣旨の免責事項を添えてください。絵文字を適度に使用して楽しく会話してください。" }]
+                            parts: [{ text: "あなたは福岡市西区薬剤師会の公式マスコットキャラクター「ニシヤクくん」（AI）です。ユーザーからの「お薬」「健康」「地域の一般的なこと」に関する質問に、親切かつフレンドリーな日本語で答えてください。語尾に「〜だよ」「〜だね」などを使い、柔らかい口調を心がけてください。一人称は「ボク」を使ってください。ただし、あなたは医師ではないため、確定的な診断や具体的な投薬指示は絶対に避けてください。回答の最後には必ず『※ボクはAIだよ。具体的な症状については、必ず医師または薬剤師に相談してね』という趣旨の免責事項を添えてください。絵文字を適度に使用して楽しく会話してください。" }]
                         }
                     })
                 });
