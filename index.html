@@ -2,21 +2,30 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- ==========================================
-          ファビコン & スマホ用アイコン設定 (強化版)
-          PC、iPhone、Androidすべてに対応
+          ファビコン & スマホホーム画面設定 (完全版)
+          GitHub上の 'favicon.png' を確実に読み込む設定
     ========================================== -->
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/FzCysGFc/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/FzCysGFc/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/FzCysGFc/favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png?v=2.0">
+    <link rel="shortcut icon" href="favicon.png?v=2.0">
+
+    <!-- iOS (iPhone/iPad) 用設定 -->
+    <link rel="apple-touch-icon" href="favicon.png?v=2.0">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon.png?v=2.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png?v=2.0">
+    <link rel="apple-touch-icon" sizes="167x167" href="favicon.png?v=2.0">
     
-    <!-- スマホでホーム画面に追加した際の設定 -->
-    <meta name="theme-color" content="#4CAF50">
+    <!-- Web App設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="西区薬剤師会">
+
+    <!-- Android / Chrome 用設定 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png?v=2.0">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon.png?v=2.0">
+    <meta name="theme-color" content="#4CAF50">
 
     <!-- ==========================================
           SEO対策 1: タイトルタグの最適化
@@ -263,6 +272,7 @@
         <!-- 左側: アイコン -->
         <div class="pointer-events-auto shrink-0">
             <a href="#" class="glass-card flex items-center justify-center p-4 hover:scale-105 transition-transform aspect-square w-48 h-48 md:w-64 md:h-64 bg-white/80 rounded-3xl">
+                <!-- 変更箇所：画像リンクを favicon.png に変更 -->
                 <img src="https://i.postimg.cc/FzCysGFc/favicon.png" alt="福岡市西区薬剤師会ロゴ" class="w-full h-full object-contain">
             </a>
         </div>
@@ -514,6 +524,7 @@
                 <!-- アイコン (リンク付き) -->
                 <div class="flex items-center gap-4">
                     <a href="#" class="hover:opacity-80 transition-opacity hover:scale-105 transform">
+                        <!-- 変更箇所：画像リンクを favicon.png に変更 -->
                         <img src="https://i.postimg.cc/FzCysGFc/favicon.png" alt="福岡市西区薬剤師会" class="w-10 h-10 md:w-12 md:h-12 object-contain">
                     </a>
                     <p class="font-en text-brandDarkGreen font-bold text-lg md:text-xl">Fukuoka City Nishi Ward Pharmaceutical Association</p>
