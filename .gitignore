@@ -1,0 +1,11 @@
+# Backups
+1209セーブ西区薬剤師会ＨＰ/
+
+# OS generated
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Temporary files
+~$*
+*.tmp
