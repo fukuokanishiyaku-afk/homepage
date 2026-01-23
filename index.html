@@ -941,7 +941,7 @@
             else if (action === 'link_emergency') {
                 addBotMessage("急な病気やケガだね。福岡市の急患センター情報を案内するね。<br>お大事にしてください🍀");
                 // リンク先を変更しました
-                setTimeout(() => window.open('https://www.city.fukuoka.lg.jp/hofuku/chiikiiryo/kyukyuiryo-syobo/6820_2.html', '_blank'), 1000);
+                setTimeout(() => window.open('https://www.city.fukuoka.lg.jp/hofuku/chiikiiryo/kyukyuiryo-syobo/6820_2.html', '_blank', 'noopener,noreferrer'), 1000);
             }
             else if (action === 'scroll_news') {
                 addBotMessage("最新のイベントや活動報告はこちらだよ！👇");
@@ -954,7 +954,7 @@
             }
             else if (action === 'link_join') {
                 addBotMessage("入会については、福岡県薬剤師会のページで詳しく案内しているよ！");
-                setTimeout(() => window.open('https://www.fpa.gr.jp/pharmacist/', '_blank'), 1000);
+                setTimeout(() => window.open('https://www.fpa.gr.jp/pharmacist/', '_blank', 'noopener,noreferrer'), 1000);
             }
 
             // --- シナリオ分岐系 ---
@@ -1220,7 +1220,7 @@
                 const card = document.createElement('div');
                 card.className = 'bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all flex flex-col cursor-pointer group';
                 // カード全体をクリックしたらGoogleマップへ
-                card.onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address + ' ' + p.name)}`, '_blank');
+                card.onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address + ' ' + p.name)}`, '_blank', 'noopener,noreferrer');
 
                 // 変更箇所：管理薬剤師の表示行を削除しました
                 card.innerHTML = `
